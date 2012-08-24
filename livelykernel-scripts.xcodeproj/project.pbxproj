@@ -1,0 +1,457 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E1E3FE6E15E84CA700EEF7CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */; };
+		E1E3FE7815E84CA700EEF7CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE7615E84CA700EEF7CD /* InfoPlist.strings */; };
+		E1E3FE7A15E84CA700EEF7CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE7915E84CA700EEF7CD /* main.m */; };
+		E1E3FE7E15E84CA700EEF7CD /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE7C15E84CA700EEF7CD /* Credits.rtf */; };
+		E1E3FE8115E84CA700EEF7CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */; };
+		E1E3FE8415E84CA800EEF7CD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE8215E84CA800EEF7CD /* MainMenu.xib */; };
+		E1E3FE8C15E84CA800EEF7CD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */; };
+		E1E3FE8D15E84CA800EEF7CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */; };
+		E1E3FE9515E84CA800EEF7CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE9315E84CA800EEF7CD /* InfoPlist.strings */; };
+		E1E3FE9815E84CA800EEF7CD /* livelykernel_scriptsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E1E3FE8E15E84CA800EEF7CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1E3FE6015E84CA700EEF7CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1E3FE6815E84CA700EEF7CD;
+			remoteInfo = "livelykernel-scripts";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "livelykernel-scripts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E1E3FE7015E84CA700EEF7CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E1E3FE7115E84CA700EEF7CD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E1E3FE7215E84CA700EEF7CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E1E3FE7515E84CA700EEF7CD /* livelykernel-scripts-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "livelykernel-scripts-Info.plist"; sourceTree = "<group>"; };
+		E1E3FE7715E84CA700EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E1E3FE7915E84CA700EEF7CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E1E3FE7B15E84CA700EEF7CD /* livelykernel-scripts-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "livelykernel-scripts-Prefix.pch"; sourceTree = "<group>"; };
+		E1E3FE7D15E84CA700EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E1E3FE8315E84CA800EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E1E3FE8A15E84CA800EEF7CD /* livelykernel-scriptsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "livelykernel-scriptsTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		E1E3FE9215E84CA800EEF7CD /* livelykernel-scriptsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "livelykernel-scriptsTests-Info.plist"; sourceTree = "<group>"; };
+		E1E3FE9415E84CA800EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E1E3FE9615E84CA800EEF7CD /* livelykernel_scriptsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = livelykernel_scriptsTests.h; sourceTree = "<group>"; };
+		E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = livelykernel_scriptsTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E1E3FE6615E84CA700EEF7CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E3FE6E15E84CA700EEF7CD /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1E3FE8615E84CA800EEF7CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E3FE8C15E84CA800EEF7CD /* SenTestingKit.framework in Frameworks */,
+				E1E3FE8D15E84CA800EEF7CD /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E1E3FE5E15E84CA700EEF7CD = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE7315E84CA700EEF7CD /* livelykernel-scripts */,
+				E1E3FE9015E84CA800EEF7CD /* livelykernel-scriptsTests */,
+				E1E3FE6C15E84CA700EEF7CD /* Frameworks */,
+				E1E3FE6A15E84CA700EEF7CD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E1E3FE6A15E84CA700EEF7CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */,
+				E1E3FE8A15E84CA800EEF7CD /* livelykernel-scriptsTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E1E3FE6C15E84CA700EEF7CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */,
+				E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */,
+				E1E3FE6F15E84CA700EEF7CD /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E1E3FE6F15E84CA700EEF7CD /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE7015E84CA700EEF7CD /* AppKit.framework */,
+				E1E3FE7115E84CA700EEF7CD /* CoreData.framework */,
+				E1E3FE7215E84CA700EEF7CD /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		E1E3FE7315E84CA700EEF7CD /* livelykernel-scripts */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */,
+				E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */,
+				E1E3FE8215E84CA800EEF7CD /* MainMenu.xib */,
+				E1E3FE7415E84CA700EEF7CD /* Supporting Files */,
+			);
+			path = "livelykernel-scripts";
+			sourceTree = "<group>";
+		};
+		E1E3FE7415E84CA700EEF7CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE7515E84CA700EEF7CD /* livelykernel-scripts-Info.plist */,
+				E1E3FE7615E84CA700EEF7CD /* InfoPlist.strings */,
+				E1E3FE7915E84CA700EEF7CD /* main.m */,
+				E1E3FE7B15E84CA700EEF7CD /* livelykernel-scripts-Prefix.pch */,
+				E1E3FE7C15E84CA700EEF7CD /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E1E3FE9015E84CA800EEF7CD /* livelykernel-scriptsTests */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE9615E84CA800EEF7CD /* livelykernel_scriptsTests.h */,
+				E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */,
+				E1E3FE9115E84CA800EEF7CD /* Supporting Files */,
+			);
+			path = "livelykernel-scriptsTests";
+			sourceTree = "<group>";
+		};
+		E1E3FE9115E84CA800EEF7CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3FE9215E84CA800EEF7CD /* livelykernel-scriptsTests-Info.plist */,
+				E1E3FE9315E84CA800EEF7CD /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E1E3FE6815E84CA700EEF7CD /* livelykernel-scripts */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1E3FE9B15E84CA800EEF7CD /* Build configuration list for PBXNativeTarget "livelykernel-scripts" */;
+			buildPhases = (
+				E1E3FE6515E84CA700EEF7CD /* Sources */,
+				E1E3FE6615E84CA700EEF7CD /* Frameworks */,
+				E1E3FE6715E84CA700EEF7CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "livelykernel-scripts";
+			productName = "livelykernel-scripts";
+			productReference = E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E1E3FE8915E84CA800EEF7CD /* livelykernel-scriptsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1E3FE9E15E84CA800EEF7CD /* Build configuration list for PBXNativeTarget "livelykernel-scriptsTests" */;
+			buildPhases = (
+				E1E3FE8515E84CA800EEF7CD /* Sources */,
+				E1E3FE8615E84CA800EEF7CD /* Frameworks */,
+				E1E3FE8715E84CA800EEF7CD /* Resources */,
+				E1E3FE8815E84CA800EEF7CD /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E1E3FE8F15E84CA800EEF7CD /* PBXTargetDependency */,
+			);
+			name = "livelykernel-scriptsTests";
+			productName = "livelykernel-scriptsTests";
+			productReference = E1E3FE8A15E84CA800EEF7CD /* livelykernel-scriptsTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E1E3FE6015E84CA700EEF7CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = LivelyKernel;
+			};
+			buildConfigurationList = E1E3FE6315E84CA700EEF7CD /* Build configuration list for PBXProject "livelykernel-scripts" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E1E3FE5E15E84CA700EEF7CD;
+			productRefGroup = E1E3FE6A15E84CA700EEF7CD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E1E3FE6815E84CA700EEF7CD /* livelykernel-scripts */,
+				E1E3FE8915E84CA800EEF7CD /* livelykernel-scriptsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E1E3FE6715E84CA700EEF7CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E3FE7815E84CA700EEF7CD /* InfoPlist.strings in Resources */,
+				E1E3FE7E15E84CA700EEF7CD /* Credits.rtf in Resources */,
+				E1E3FE8415E84CA800EEF7CD /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1E3FE8715E84CA800EEF7CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E3FE9515E84CA800EEF7CD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E1E3FE8815E84CA800EEF7CD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E1E3FE6515E84CA700EEF7CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E3FE7A15E84CA700EEF7CD /* main.m in Sources */,
+				E1E3FE8115E84CA700EEF7CD /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1E3FE8515E84CA800EEF7CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E3FE9815E84CA800EEF7CD /* livelykernel_scriptsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E1E3FE8F15E84CA800EEF7CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1E3FE6815E84CA700EEF7CD /* livelykernel-scripts */;
+			targetProxy = E1E3FE8E15E84CA800EEF7CD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E1E3FE7615E84CA700EEF7CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1E3FE7715E84CA700EEF7CD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E1E3FE7C15E84CA700EEF7CD /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1E3FE7D15E84CA700EEF7CD /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		E1E3FE8215E84CA800EEF7CD /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1E3FE8315E84CA800EEF7CD /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		E1E3FE9315E84CA800EEF7CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1E3FE9415E84CA800EEF7CD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E1E3FE9915E84CA800EEF7CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E1E3FE9A15E84CA800EEF7CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E1E3FE9C15E84CA800EEF7CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "livelykernel-scripts/livelykernel-scripts-Prefix.pch";
+				INFOPLIST_FILE = "livelykernel-scripts/livelykernel-scripts-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E1E3FE9D15E84CA800EEF7CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "livelykernel-scripts/livelykernel-scripts-Prefix.pch";
+				INFOPLIST_FILE = "livelykernel-scripts/livelykernel-scripts-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E1E3FE9F15E84CA800EEF7CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/livelykernel-scripts.app/Contents/MacOS/livelykernel-scripts";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "livelykernel-scripts/livelykernel-scripts-Prefix.pch";
+				INFOPLIST_FILE = "livelykernel-scriptsTests/livelykernel-scriptsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		E1E3FEA015E84CA800EEF7CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/livelykernel-scripts.app/Contents/MacOS/livelykernel-scripts";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "livelykernel-scripts/livelykernel-scripts-Prefix.pch";
+				INFOPLIST_FILE = "livelykernel-scriptsTests/livelykernel-scriptsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E1E3FE6315E84CA700EEF7CD /* Build configuration list for PBXProject "livelykernel-scripts" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1E3FE9915E84CA800EEF7CD /* Debug */,
+				E1E3FE9A15E84CA800EEF7CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1E3FE9B15E84CA800EEF7CD /* Build configuration list for PBXNativeTarget "livelykernel-scripts" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1E3FE9C15E84CA800EEF7CD /* Debug */,
+				E1E3FE9D15E84CA800EEF7CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E1E3FE9E15E84CA800EEF7CD /* Build configuration list for PBXNativeTarget "livelykernel-scriptsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1E3FE9F15E84CA800EEF7CD /* Debug */,
+				E1E3FEA015E84CA800EEF7CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E1E3FE6015E84CA700EEF7CD /* Project object */;
+}
