@@ -8,7 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+    NSApplication *theApp;
+    IBOutlet NSMenu *statusMenu;
+    IBOutlet NSWindow *settingsWindow;
+    NSStatusItem * statusItem;
+}
 
 @property (assign) IBOutlet NSWindow *window;
 

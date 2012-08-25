@@ -12,11 +12,11 @@
 		E1E3FE7A15E84CA700EEF7CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE7915E84CA700EEF7CD /* main.m */; };
 		E1E3FE7E15E84CA700EEF7CD /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE7C15E84CA700EEF7CD /* Credits.rtf */; };
 		E1E3FE8115E84CA700EEF7CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */; };
-		E1E3FE8415E84CA800EEF7CD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE8215E84CA800EEF7CD /* MainMenu.xib */; };
 		E1E3FE8C15E84CA800EEF7CD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */; };
 		E1E3FE8D15E84CA800EEF7CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */; };
 		E1E3FE9515E84CA800EEF7CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE9315E84CA800EEF7CD /* InfoPlist.strings */; };
 		E1E3FE9815E84CA800EEF7CD /* livelykernel_scriptsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */; };
+		E1E3FEAA15E8592400EEF7CD /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FEA915E8592400EEF7CD /* Application.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,13 +42,13 @@
 		E1E3FE7D15E84CA700EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E1E3FE8315E84CA800EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E1E3FE8A15E84CA800EEF7CD /* livelykernel-scriptsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "livelykernel-scriptsTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		E1E3FE9215E84CA800EEF7CD /* livelykernel-scriptsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "livelykernel-scriptsTests-Info.plist"; sourceTree = "<group>"; };
 		E1E3FE9415E84CA800EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E1E3FE9615E84CA800EEF7CD /* livelykernel_scriptsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = livelykernel_scriptsTests.h; sourceTree = "<group>"; };
 		E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = livelykernel_scriptsTests.m; sourceTree = "<group>"; };
+		E1E3FEA915E8592400EEF7CD /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +116,7 @@
 			children = (
 				E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */,
 				E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */,
-				E1E3FE8215E84CA800EEF7CD /* MainMenu.xib */,
+				E1E3FEA915E8592400EEF7CD /* Application.xib */,
 				E1E3FE7415E84CA700EEF7CD /* Supporting Files */,
 			);
 			path = "livelykernel-scripts";
@@ -226,7 +226,7 @@
 			files = (
 				E1E3FE7815E84CA700EEF7CD /* InfoPlist.strings in Resources */,
 				E1E3FE7E15E84CA700EEF7CD /* Credits.rtf in Resources */,
-				E1E3FE8415E84CA800EEF7CD /* MainMenu.xib in Resources */,
+				E1E3FEAA15E8592400EEF7CD /* Application.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,14 +299,6 @@
 				E1E3FE7D15E84CA700EEF7CD /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		E1E3FE8215E84CA800EEF7CD /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E1E3FE8315E84CA800EEF7CD /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		E1E3FE9315E84CA800EEF7CD /* InfoPlist.strings */ = {
