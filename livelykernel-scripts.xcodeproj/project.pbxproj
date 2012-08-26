@@ -35,9 +35,9 @@
 /* Begin PBXFileReference section */
 		E179104415E887BD007EDC5D /* SettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
 		E179104515E887BD007EDC5D /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
-		E179104815E894C4007EDC5D /* Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protocol.h; sourceTree = "<group>"; };
 		E179104C15E89DBB007EDC5D /* lk-not-running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lk-not-running.png"; sourceTree = "<group>"; };
 		E179104D15E89DBB007EDC5D /* lk-running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lk-running.png"; sourceTree = "<group>"; };
+		E1CBDCD715EA254400277C38 /* copy-git.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "copy-git.sh"; sourceTree = "<group>"; };
 		E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "livelykernel-scripts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E1E3FE7015E84CA700EEF7CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -123,8 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				E179104415E887BD007EDC5D /* SettingsWindowController.h */,
+				E1CBDCD715EA254400277C38 /* copy-git.sh */,
 				E179104515E887BD007EDC5D /* SettingsWindowController.m */,
-				E179104815E894C4007EDC5D /* Protocol.h */,
 				E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */,
 				E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */,
 				E1E3FEA915E8592400EEF7CD /* Application.xib */,
@@ -176,6 +176,7 @@
 				E1E3FE6515E84CA700EEF7CD /* Sources */,
 				E1E3FE6615E84CA700EEF7CD /* Frameworks */,
 				E1E3FE6715E84CA700EEF7CD /* Resources */,
+				E1CBDCD615EA245F00277C38 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -256,6 +257,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		E1CBDCD615EA245F00277C38 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/Users/robert/Documents/xcode/livelykernel-scripts/livelykernel-scripts/copy-git.sh";
+		};
 		E1E3FE8815E84CA800EEF7CD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
