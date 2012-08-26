@@ -1,0 +1,9 @@
+[submodule "git_osx_installer"]
+	path = git_osx_installer
+	url = https://github.com/rksm/git_osx_installer.git
+[submodule "node"]
+	path = node
+	url = https://github.com/rksm/node.git
+[submodule "lk-scripts"]
+	path = lk-scripts
+	url = git@github.com:rksm/livelykernel-scripts.git
