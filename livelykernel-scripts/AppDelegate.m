@@ -16,6 +16,7 @@
 
 - (void)awakeFromNib {
     [self initStatusMenu];
+    [self startServerWatcher];
 }
 
 - (void) initStatusMenu {
@@ -25,16 +26,23 @@
     [self updateViewFromServerStatus];
 }
 
-- (Boolean) isServerRunning {
-    // todo implement
-    return YES;
+- (void) startServerWatcher {
+    serverWatchLoop = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                     target:self
+                                   selector:@selector(updateViewFromServerStatus)
+                                   userInfo: nil
+                                    repeats:YES];
 }
 
-- (void) updateViewFromServerStatus {
-    NSString* imageNamePart = [self isServerRunning] ? @"lk-running" : @"lk-not-running";
-    NSString* imageName = [[NSBundle mainBundle] pathForResource:imageNamePart ofType:@"png"];
-    NSImage* lkStatusImage = [[NSImage alloc] initWithContentsOfFile:imageName];
-    [statusItem setImage: lkStatusImage];
+- (void) serverStateChanged {
+//    [serverWatchLoop invalidate];
+//     quick update
+    [NSTimer scheduledTimerWithTimeInterval:0.2
+                                     target:self
+                                   selector:@selector(updateViewFromServerStatus)
+                                   userInfo:nil
+                                    repeats:NO];
+//    [self startServerWatcher];
 }
 
 - (void) inform:msg {
@@ -43,56 +51,115 @@
     [alert runModal];
 }
 
-- (IBAction) startServer:(id)sender {
-    NSString *lkCmdPath = [[NSBundle mainBundle] pathForResource:@"lk" ofType:nil];
-    lkCmdPath = @"/usr/local/bin/lk";
-    NSArray *arguments = [NSArray arrayWithObjects: @"server", nil];
-    NSPipe *pipe = [NSPipe pipe];
-    
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: lkCmdPath];
-    [task setArguments: arguments];
-    [task setStandardOutput: pipe];
-    //The magic line that keeps your log where it belongs
-    [task setStandardInput:[NSPipe pipe]];
-    
-    NSFileHandle *file = [pipe fileHandleForReading];
-    
-    [task launch];
-    
-    NSData *data = [file readDataToEndOfFile];
-    
-    NSString *string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    NSLog (@"Returned:\n%@", string);
+- (void) updateViewFromServerStatus {
+    isServerAlive = [self isServerAlive];
+    NSString* imageNamePart = isServerAlive ? @"lk-running" : @"lk-not-running";
+    NSString* imageName = [[NSBundle mainBundle] pathForResource:imageNamePart ofType:@"png"];
+    NSImage* lkStatusImage = [[NSImage alloc] initWithContentsOfFile:imageName];
+    [statusItem setImage: lkStatusImage];
+    [startStopMenuItem setTitle: (isServerAlive ? @"Stop server" : @"Start server")];
 }
 
-- (IBAction) runCmd:(id)sender {
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: @"/bin/ls"];
+- (IBAction)chooseServerLocation:(id)sender {
+    // Create the File Open Dialog class.
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    [openDlg setCanChooseFiles:NO];
+    [openDlg setCanChooseDirectories:YES];
+    [openDlg setAllowsMultipleSelection:NO];
+    if (lkRepositoryLocation) {
+        [openDlg setDirectoryURL:lkRepositoryLocation];
+    }
+    // Display the dialog.  If the OK button was pressed,
+    // process the files.
+    if ([openDlg runModal] == NSOKButton) {
+        // Get an array containing the full filenames of all
+        // files and directories selected.
+        NSArray* files = [openDlg URLs];
+        NSURL *selection = [files lastObject];
+        //        [self inform: [selection absoluteString]];
+        lkRepositoryLocation = selection;
+        [self inform: [selection path]];
+    }
+}
+
+- (Boolean)isServerAlive {
+    // get `lk server --info`
+    NSArray *arguments = [NSArray arrayWithObjects: @"lk server --info",nil];
+    NSString* serverInfoString = [self runLKServerCmdWithArgs:arguments waitForResult:true];
+
+    // we are currently only interested in "alive"
+    Boolean alive = false;
+    NSInteger pid = 0;
+
+    // scan a one level JSON object
+    NSScanner *infoScanner = [NSScanner scannerWithString:serverInfoString];
+    NSString *key;
+    [infoScanner setCharactersToBeSkipped: [NSCharacterSet characterSetWithCharactersInString:@"{}"]];    
+    while ([infoScanner isAtEnd] == NO) {
+        [infoScanner scanString:@"\"" intoString:NULL];
+        [infoScanner scanUpToString: @"\"" intoString:&key];
+        [infoScanner scanString:@"\":" intoString:NULL];
+        if ([key isEqualToString:@"alive"]) {
+            NSString *aliveString;
+            [infoScanner scanUpToString: @"," intoString:&aliveString];
+            alive = [aliveString isEqualToString:@"true"];
+        }
+        if ([key isEqualToString:@"pid"]) {
+            [infoScanner scanString:@"\"" intoString:NULL];
+            [infoScanner scanInteger:&pid];
+            [infoScanner scanString:@"\"" intoString:NULL];
+        }
+        [infoScanner scanString: @"," intoString:NULL];
+    }
     
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: @"/Users/robert/", nil];
+//    NSLog(@"alive: %@, pid: %lo", alive ? @"true" : @"false", pid);
+    return alive;
+}
+
+- (IBAction)informAboutServerState:(id)sender {
+//    [self inform: [self isServerAlive] ? @"Server is running" : @"No server running"];
+//    [self inform: [self runCmd:@"node" args: [NSArray array] waitForResult:true]];
+}
+
+- (IBAction) startOrStopServer:(id)sender {
+    // non-blocking
+    NSString *arg = isServerAlive ? @"lk server --kill" : @"lk server";
+    [self runLKServerCmdWithArgs:[NSArray arrayWithObjects: arg,nil] waitForResult:false];
+    [self serverStateChanged];
+}
+
+- (NSString*) runLKServerCmdWithArgs:(NSArray *)arguments waitForResult:(Boolean)wait {
+    NSString *lkCmdPath = [[NSBundle mainBundle] pathForResource:@"lk" ofType:nil];
+    lkCmdPath = @"/bin/bash";
+//    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c", @"lk server",nil];
+    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c",nil];
+    NSArray *allArguments = [baseArguments arrayByAddingObjectsFromArray:arguments];
+    //    NSArray *arguments = [NSArray arrayWithObjects: @"lk", @"server", nil];
+    return [self runCmd:lkCmdPath args:allArguments waitForResult:wait];
+}
+
+- (NSString*) runCmd:(NSString*)cmd args:(NSArray *)arguments waitForResult:(Boolean)wait {
+    NSTask *task = [[NSTask alloc] init];
+    NSPipe *pipe = [NSPipe pipe];
+
+    [task setLaunchPath: cmd];
     [task setArguments: arguments];
-    
-    NSPipe *pipe;
-    pipe = [NSPipe pipe];
     [task setStandardOutput: pipe];
     //The magic line that keeps your log where it belongs
     [task setStandardInput:[NSPipe pipe]];
-    
+
     NSFileHandle *file;
     file = [pipe fileHandleForReading];
-    
+
     [task launch];
-    
-    NSData *data;
-    data = [file readDataToEndOfFile];
-    
-    NSString *string;
-    string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    NSLog (@"grep returned:\n%@", string);
+
+    if (wait) {
+        NSData *data = [file readDataToEndOfFile];
+        NSString *string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+        return string;
+    }
+ 
+    return nil;
 }
 
 @end

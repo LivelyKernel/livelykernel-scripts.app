@@ -9,8 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
+    NSTimer *serverWatchLoop;
     NSStatusItem *statusItem;
+    NSURL *lkRepositoryLocation;
     IBOutlet NSMenu *statusMenu;
+    IBOutlet NSMenuItem *startStopMenuItem;
+    Boolean isServerAlive;
 }
 -(void) inform:msg;
 @end
