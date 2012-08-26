@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <stdlib.h> // for setenv
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     NSTimer *serverWatchLoop;

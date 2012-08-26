@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 LivelyKernel. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "AppDelegate.h" 
 
 @implementation AppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -15,8 +15,23 @@
 }
 
 - (void)awakeFromNib {
+    [self extendEnv];
     [self initStatusMenu];
     [self startServerWatcher];
+}
+
+- (void)extendEnv {
+    // LSEnvironment doesn't work...
+    NSString *gitPath = [[NSBundle mainBundle] pathForResource:@"git/bin" ofType:@""];
+    NSString *nodePath = [[NSBundle mainBundle] pathForResource:@"node/bin" ofType:@""];
+    NSString *lkPath = [[NSBundle mainBundle] pathForResource:@"node/lib/node_modules/livelykernel-scripts/bin" ofType:@""];
+    char *path = getenv ("PATH");
+    NSArray *pathParts = [NSArray arrayWithObjects:
+                          [NSString stringWithUTF8String:path],
+                          gitPath, nodePath, lkPath, nil];
+    NSString *nsPath = [pathParts componentsJoinedByString: @":"];
+    NSLog(@"%@", nsPath);
+    setenv("PATH", [nsPath UTF8String], true);
 }
 
 - (void) initStatusMenu {
@@ -117,6 +132,14 @@
 }
 
 - (IBAction)informAboutServerState:(id)sender {
+//    NSString *git = [[NSBundle mainBundle] pathForResource:@"git/bin/git" ofType:@""];
+//    char *rawPath = getenv("foo");
+//    NSString *path = [NSString stringWithCString:rawPath encoding:NSASCIIStringEncoding];
+//    [self inform:path];
+//    NSLog([self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"npm", @"list", nil] waitForResult:true]);
+//    NSLog([self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"env", nil] waitForResult:true]);
+//    NSLog([self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"npm -g list", nil] waitForResult:true]);
+    [self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"lk server", nil] waitForResult:false];
 //    [self inform: [self isServerAlive] ? @"Server is running" : @"No server running"];
 //    [self inform: [self runCmd:@"node" args: [NSArray array] waitForResult:true]];
 }
@@ -132,7 +155,7 @@
     NSString *lkCmdPath = [[NSBundle mainBundle] pathForResource:@"lk" ofType:nil];
     lkCmdPath = @"/bin/bash";
 //    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c", @"lk server",nil];
-    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c",nil];
+    NSArray *baseArguments = [NSArray arrayWithObjects: @"-c",nil];
     NSArray *allArguments = [baseArguments arrayByAddingObjectsFromArray:arguments];
     //    NSArray *arguments = [NSArray arrayWithObjects: @"lk", @"server", nil];
     return [self runCmd:lkCmdPath args:allArguments waitForResult:wait];
