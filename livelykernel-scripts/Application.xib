@@ -1273,6 +1273,16 @@
 						<reference key="NSOnImage" ref="353210768"/>
 						<reference key="NSMixedImage" ref="549394948"/>
 					</object>
+					<object class="NSMenuItem" id="829137654">
+						<reference key="NSMenu" ref="612184616"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="353210768"/>
+						<reference key="NSMixedImage" ref="549394948"/>
+					</object>
 					<object class="NSMenuItem" id="573949387">
 						<reference key="NSMenu" ref="612184616"/>
 						<string key="NSTitle">Change LK repository location...</string>
@@ -1284,6 +1294,16 @@
 					<object class="NSMenuItem" id="1004393026">
 						<reference key="NSMenu" ref="612184616"/>
 						<string key="NSTitle">Show server infos...</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="353210768"/>
+						<reference key="NSMixedImage" ref="549394948"/>
+					</object>
+					<object class="NSMenuItem" id="476382522">
+						<reference key="NSMenu" ref="612184616"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="353210768"/>
@@ -2970,6 +2990,8 @@
 							<reference ref="410142791"/>
 							<reference ref="573949387"/>
 							<reference ref="1004393026"/>
+							<reference ref="829137654"/>
+							<reference ref="476382522"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -2993,6 +3015,16 @@
 						<reference key="object" ref="1004393026"/>
 						<reference key="parent" ref="612184616"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1280</int>
+						<reference key="object" ref="829137654"/>
+						<reference key="parent" ref="612184616"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1281</int>
+						<reference key="object" ref="476382522"/>
+						<reference key="parent" ref="612184616"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3008,6 +3040,8 @@
 				<string key="126.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1267.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1273.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1280.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1281.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="129.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3156,7 +3190,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1279</int>
+			<int key="maxID">1281</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
