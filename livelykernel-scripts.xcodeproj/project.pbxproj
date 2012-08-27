@@ -41,7 +41,6 @@
 		E179104D15E89DBB007EDC5D /* lk-running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lk-running.png"; sourceTree = "<group>"; };
 		E1A551AE15EA892000E9A914 /* lk.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = lk.iconset; sourceTree = "<group>"; };
 		E1A551B115EA896400E9A914 /* lk.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lk.icns; sourceTree = "<group>"; };
-		E1CBDCD715EA254400277C38 /* copy-dependencies.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "copy-dependencies.sh"; sourceTree = "<group>"; };
 		E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "livelykernel-scripts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E1E3FE7015E84CA700EEF7CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -127,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				E179104415E887BD007EDC5D /* SettingsWindowController.h */,
-				E1CBDCD715EA254400277C38 /* copy-dependencies.sh */,
 				E179104515E887BD007EDC5D /* SettingsWindowController.m */,
 				E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */,
 				E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */,
@@ -182,7 +180,6 @@
 				E1E3FE6515E84CA700EEF7CD /* Sources */,
 				E1E3FE6615E84CA700EEF7CD /* Frameworks */,
 				E1E3FE6715E84CA700EEF7CD /* Resources */,
-				E1CBDCD615EA245F00277C38 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -265,19 +262,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E1CBDCD615EA245F00277C38 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/Users/robert/Documents/xcode/livelykernel-scripts/livelykernel-scripts/copy-dependencies.sh";
-		};
 		E1E3FE8815E84CA800EEF7CD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -406,6 +390,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "livelykernel-scripts/livelykernel-scripts-Prefix.pch";
 				INFOPLIST_FILE = "livelykernel-scripts/livelykernel-scripts-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -418,6 +403,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "livelykernel-scripts/livelykernel-scripts-Prefix.pch";
 				INFOPLIST_FILE = "livelykernel-scripts/livelykernel-scripts-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
