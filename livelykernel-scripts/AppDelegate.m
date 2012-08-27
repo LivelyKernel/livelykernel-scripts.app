@@ -15,10 +15,21 @@
 }
 
 - (void)awakeFromNib {
-    [self extendEnv];
+//    [self extendEnv];
     [self initStatusMenu];
+    [self updateViewFromServerStatus];
+    if (!isServerAlive) { [self startOrStopServer:nil]; }
     [self startServerWatcher];
+    [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
 }
+
+-(NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+//    if (isServerAlive) {
+//        [self startOrStopServer:nil];
+//    }
+    return NSTerminateNow;
+}
+
 
 - (void)extendEnv {
     // LSEnvironment doesn't work...
@@ -131,17 +142,23 @@
     return alive;
 }
 
+- (IBAction)updatePartsBin:(id)sender {
+    [self runAndShowLKServerCmdWithArgs: [NSArray arrayWithObject:@"lk partsbin"]];
+}
+
+- (IBAction)updateCoreRepo:(id)sender {
+    [self runAndShowLKServerCmdWithArgs: [NSArray arrayWithObject:@"lk workspace -u"]];
+}
+
+- (IBAction)updateUserDirectory:(id)sender {
+}
+
+- (IBAction)openLivelyInBrowser:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://localhost:9001/blank.xhtml"]];
+}
+
 - (IBAction)informAboutServerState:(id)sender {
-//    NSString *git = [[NSBundle mainBundle] pathForResource:@"git/bin/git" ofType:@""];
-//    char *rawPath = getenv("foo");
-//    NSString *path = [NSString stringWithCString:rawPath encoding:NSASCIIStringEncoding];
-//    [self inform:path];
-//    NSLog([self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"npm", @"list", nil] waitForResult:true]);
-//    NSLog([self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"env", nil] waitForResult:true]);
-//    NSLog([self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"npm -g list", nil] waitForResult:true]);
-    [self runCmd:@"/bin/bash" args: [NSArray arrayWithObjects:@"-c", @"lk server", nil] waitForResult:false];
-//    [self inform: [self isServerAlive] ? @"Server is running" : @"No server running"];
-//    [self inform: [self runCmd:@"node" args: [NSArray array] waitForResult:true]];
+    [self runAndShowLKServerCmdWithArgs: [NSArray arrayWithObjects:@"lk server --info", nil]];
 }
 
 - (IBAction) startOrStopServer:(id)sender {
@@ -151,38 +168,67 @@
     [self serverStateChanged];
 }
 
-- (NSString*) runLKServerCmdWithArgs:(NSArray *)arguments waitForResult:(Boolean)wait {
-    NSString *lkCmdPath = [[NSBundle mainBundle] pathForResource:@"lk" ofType:nil];
-    lkCmdPath = @"/bin/bash";
-//    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c", @"lk server",nil];
-    NSArray *baseArguments = [NSArray arrayWithObjects: @"-c",nil];
+- (void) runAndShowLKServerCmdWithArgs:(NSArray *)arguments {
+    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c",nil];
     NSArray *allArguments = [baseArguments arrayByAddingObjectsFromArray:arguments];
-    //    NSArray *arguments = [NSArray arrayWithObjects: @"lk", @"server", nil];
-    return [self runCmd:lkCmdPath args:allArguments waitForResult:wait];
+    NSFileHandle *out = [self runCmd:@"/bin/bash" args:allArguments];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(readLKServerCmdOutput:)
+                               name:NSFileHandleReadCompletionNotification
+                             object:out];
+    [out readInBackgroundAndNotify];
+}
+
+-(void) readLKServerCmdOutput: (NSNotification *)aNotification {
+    NSData *data = [[aNotification userInfo] objectForKey:@"NSFileHandleNotificationDataItem"];
+    if ([data length] == 0) return;
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    [self performSelectorOnMainThread:@selector(showInHUD:)
+        withObject:string
+        waitUntilDone:false];
+    [[aNotification object] readInBackgroundAndNotify];
+}
+
+-(void) showInHUD:(NSString*)string {
+    if (![scriptOutputWindow isVisible]){
+        [scriptOutputWindow makeKeyAndOrderFront: nil];
+    }
+    [scriptText setTextColor:[NSColor whiteColor]];
+    [[[scriptText textStorage] mutableString] appendString: string];
+}
+
+- (NSString*) runLKServerCmdWithArgs:(NSArray *)arguments waitForResult:(Boolean)wait {
+    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c",nil];
+    NSArray *allArguments = [baseArguments arrayByAddingObjectsFromArray:arguments];
+    return [self runCmd:@"/bin/bash" args:allArguments waitForResult:wait];
 }
 
 - (NSString*) runCmd:(NSString*)cmd args:(NSArray *)arguments waitForResult:(Boolean)wait {
-    NSTask *task = [[NSTask alloc] init];
-    NSPipe *pipe = [NSPipe pipe];
-
-    [task setLaunchPath: cmd];
-    [task setArguments: arguments];
-    [task setStandardOutput: pipe];
-    //The magic line that keeps your log where it belongs
-    [task setStandardInput:[NSPipe pipe]];
-
-    NSFileHandle *file;
-    file = [pipe fileHandleForReading];
-
-    [task launch];
-
+    NSFileHandle *file = [self runCmd:cmd args:arguments];
     if (wait) {
         NSData *data = [file readDataToEndOfFile];
         NSString *string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
         return string;
     }
- 
     return nil;
+}
+
+- (NSFileHandle*) runCmd:(NSString*)cmd args:(NSArray *)arguments {
+    NSTask *task = [[NSTask alloc] init];
+    NSPipe *pipe = [NSPipe pipe];
+    
+    [task setLaunchPath: cmd];
+    [task setArguments: arguments];
+    [task setStandardOutput: pipe];
+    //The magic line that keeps your log where it belongs
+    [task setStandardInput:[NSPipe pipe]];
+    
+    NSFileHandle *file = [pipe fileHandleForReading];
+    [task launch];
+    return file;
 }
 
 @end

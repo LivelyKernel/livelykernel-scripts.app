@@ -16,6 +16,9 @@
     IBOutlet NSMenu *statusMenu;
     IBOutlet NSMenuItem *startStopMenuItem;
     Boolean isServerAlive;
+    
+    IBOutlet NSWindow *scriptOutputWindow;
+    IBOutlet NSTextView *scriptText;
 }
 -(void) inform:msg;
 @end
