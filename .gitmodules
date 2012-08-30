@@ -7,6 +7,3 @@
 [submodule "lk-scripts"]
 	path = lk-scripts
 	url = git@github.com:rksm/livelykernel-scripts.git
-[submodule "livelykernel-scripts/StartAtLoginController"]
-	path = livelykernel-scripts/StartAtLoginController
-	url = git://github.com/alexzielenski/StartAtLoginController.git
