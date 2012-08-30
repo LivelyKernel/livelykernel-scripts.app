@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include <stdlib.h> // for setenv
+#import "StartAtLoginManager.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     NSTimer *serverWatchLoop;

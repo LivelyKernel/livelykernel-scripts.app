@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 LivelyKernel. All rights reserved.
 //
 
-#import "AppDelegate.h" 
+#import "AppDelegate.h"
 
 @implementation AppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -21,6 +21,12 @@
     if (!isServerAlive) { [self startOrStopServer:nil]; }
     [self startServerWatcher];
     [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
+    [self setupAutoStartup];
+    
+//    NSArray *running = [[NSWorkspace sharedWorkspace] runningApplications];
+//    for (NSRunningApplication *app in running) {
+//        NSLog([app bundleIdentifier]);
+//    }
 }
 
 -(NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
@@ -30,6 +36,15 @@
     return NSTerminateNow;
 }
 
+-(void) setupAutoStartup {
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    BOOL willStartAtLogin = [StartAtLoginManager willStartAtLogin:url];
+    NSLog(@"start at login: %@", willStartAtLogin ? @"Yes" : @"No");
+    if (!willStartAtLogin) {
+        [StartAtLoginManager setStartAtLogin:url enabled:true];
+    }
+//    [StartAtLoginManager setStartAtLogin:url enabled:false];
+}
 
 - (void)extendEnv {
     // LSEnvironment doesn't work...
