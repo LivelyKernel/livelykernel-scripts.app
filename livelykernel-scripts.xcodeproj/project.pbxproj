@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E13811A015EF0249007C2A3B /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E138119F15EF0249007C2A3B /* ApplicationServices.framework */; };
+		E13811A315EF0446007C2A3B /* StartAtLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E13811A215EF0446007C2A3B /* StartAtLoginManager.m */; };
 		E179104615E887BD007EDC5D /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179104515E887BD007EDC5D /* SettingsWindowController.m */; };
 		E179104E15E89DBB007EDC5D /* lk-not-running.png in Resources */ = {isa = PBXBuildFile; fileRef = E179104C15E89DBB007EDC5D /* lk-not-running.png */; };
 		E179104F15E89DBB007EDC5D /* lk-running.png in Resources */ = {isa = PBXBuildFile; fileRef = E179104D15E89DBB007EDC5D /* lk-running.png */; };
 		E1A551AF15EA892000E9A914 /* lk.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E1A551AE15EA892000E9A914 /* lk.iconset */; };
 		E1A551B215EA896400E9A914 /* lk.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1A551B115EA896400E9A914 /* lk.icns */; };
+		E1D254B915ED6037008B5832 /* StartAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D254B815ED6037008B5832 /* StartAtLoginController.m */; };
+		E1D254BB15ED6177008B5832 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D254BA15ED6177008B5832 /* ServiceManagement.framework */; };
 		E1E3FE6E15E84CA700EEF7CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */; };
 		E1E3FE7815E84CA700EEF7CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE7615E84CA700EEF7CD /* InfoPlist.strings */; };
 		E1E3FE7A15E84CA700EEF7CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE7915E84CA700EEF7CD /* main.m */; };
@@ -35,12 +39,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E138119D15EEFEB9007C2A3B /* livelykernel-scripts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "livelykernel-scripts.entitlements"; sourceTree = "<group>"; };
+		E138119F15EF0249007C2A3B /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		E13811A115EF0446007C2A3B /* StartAtLoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAtLoginManager.h; sourceTree = "<group>"; };
+		E13811A215EF0446007C2A3B /* StartAtLoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAtLoginManager.m; sourceTree = "<group>"; };
 		E179104415E887BD007EDC5D /* SettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
 		E179104515E887BD007EDC5D /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
 		E179104C15E89DBB007EDC5D /* lk-not-running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lk-not-running.png"; sourceTree = "<group>"; };
 		E179104D15E89DBB007EDC5D /* lk-running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lk-running.png"; sourceTree = "<group>"; };
 		E1A551AE15EA892000E9A914 /* lk.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = lk.iconset; sourceTree = "<group>"; };
 		E1A551B115EA896400E9A914 /* lk.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lk.icns; sourceTree = "<group>"; };
+		E1D254B615ED602B008B5832 /* StartAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StartAtLoginController.h; path = StartAtLoginController/StartAtLoginController.h; sourceTree = "<group>"; };
+		E1D254B815ED6037008B5832 /* StartAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StartAtLoginController.m; path = StartAtLoginController/StartAtLoginController.m; sourceTree = "<group>"; };
+		E1D254BA15ED6177008B5832 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "livelykernel-scripts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E1E3FE7015E84CA700EEF7CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -67,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E13811A015EF0249007C2A3B /* ApplicationServices.framework in Frameworks */,
+				E1D254BB15ED6177008B5832 /* ServiceManagement.framework in Frameworks */,
 				E1E3FE6E15E84CA700EEF7CD /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +99,8 @@
 		E1E3FE5E15E84CA700EEF7CD = {
 			isa = PBXGroup;
 			children = (
+				E138119F15EF0249007C2A3B /* ApplicationServices.framework */,
+				E1D254BA15ED6177008B5832 /* ServiceManagement.framework */,
 				E1E3FE7315E84CA700EEF7CD /* livelykernel-scripts */,
 				E1E3FE9015E84CA800EEF7CD /* livelykernel-scriptsTests */,
 				E1E3FE6C15E84CA700EEF7CD /* Frameworks */,
@@ -125,8 +140,13 @@
 		E1E3FE7315E84CA700EEF7CD /* livelykernel-scripts */ = {
 			isa = PBXGroup;
 			children = (
+				E138119D15EEFEB9007C2A3B /* livelykernel-scripts.entitlements */,
 				E179104415E887BD007EDC5D /* SettingsWindowController.h */,
 				E179104515E887BD007EDC5D /* SettingsWindowController.m */,
+				E1D254B615ED602B008B5832 /* StartAtLoginController.h */,
+				E13811A115EF0446007C2A3B /* StartAtLoginManager.h */,
+				E13811A215EF0446007C2A3B /* StartAtLoginManager.m */,
+				E1D254B815ED6037008B5832 /* StartAtLoginController.m */,
 				E1E3FE7F15E84CA700EEF7CD /* AppDelegate.h */,
 				E1E3FE8015E84CA700EEF7CD /* AppDelegate.m */,
 				E1A551B115EA896400E9A914 /* lk.icns */,
@@ -285,6 +305,8 @@
 				E1E3FE7A15E84CA700EEF7CD /* main.m in Sources */,
 				E1E3FE8115E84CA700EEF7CD /* AppDelegate.m in Sources */,
 				E179104615E887BD007EDC5D /* SettingsWindowController.m in Sources */,
+				E1D254B915ED6037008B5832 /* StartAtLoginController.m in Sources */,
+				E13811A315EF0446007C2A3B /* StartAtLoginManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
