@@ -16,6 +16,8 @@
 
 - (void)awakeFromNib {
 //    [self extendEnv];
+    storageController = [[StorageController alloc] init];
+    [storageController loadData];
     [self initStatusMenu];
     [self updateViewFromServerStatus];
     if (!isServerAlive) { [self startOrStopServer:nil]; }

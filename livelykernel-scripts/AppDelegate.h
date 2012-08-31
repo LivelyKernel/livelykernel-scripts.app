@@ -9,15 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #include <stdlib.h> // for setenv
 #import "StartAtLoginManager.h"
+#import "StorageController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
+    StorageController *storageController;
     NSTimer *serverWatchLoop;
     NSStatusItem *statusItem;
     NSURL *lkRepositoryLocation;
+    Boolean isServerAlive;
     IBOutlet NSMenu *statusMenu;
     IBOutlet NSMenuItem *startStopMenuItem;
-    Boolean isServerAlive;
-    
     IBOutlet NSWindow *scriptOutputWindow;
     IBOutlet NSTextView *scriptText;
 }
