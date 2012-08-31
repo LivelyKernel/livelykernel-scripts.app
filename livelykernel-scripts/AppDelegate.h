@@ -10,18 +10,13 @@
 #include <stdlib.h> // for setenv
 #import "StartAtLoginManager.h"
 #import "StorageController.h"
+#import "LKScriptsController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     StorageController *storageController;
     StartAtLoginManager *loginController;
-    NSTimer *serverWatchLoop;
-    NSStatusItem *statusItem;
-    NSURL *lkRepositoryLocation;
-    Boolean isServerAlive;
+    LKScriptsController *lkScriptsController;
     IBOutlet NSMenu *statusMenu;
-    IBOutlet NSMenuItem *startStopMenuItem;
-    IBOutlet NSWindow *scriptOutputWindow;
-    IBOutlet NSTextView *scriptText;
 }
 -(void) inform:msg;
 @end
