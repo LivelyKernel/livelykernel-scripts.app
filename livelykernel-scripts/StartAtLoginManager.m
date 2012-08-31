@@ -10,8 +10,45 @@
 
 @implementation StartAtLoginManager
 
-+ (BOOL) willStartAtLogin:(NSURL *)itemURL
-{
+@synthesize storage;
+
+-(id)initWithStorage:(StorageController*)storageRef {
+    self = [self init];
+    [self setStorage: storageRef];
+    return self;
+}
+
+-(void) setupAutoStartup {
+    if ([storage isFirstStart]) {
+        NSLog(@"Starting for the first time, enabling start at login");
+        [self setStartAtLogin:YES];
+    } else {
+        [startAtLoginMenuItem setState: [self startAtLogin] ? NSOnState : NSOffState];
+    }
+}
+
+- (IBAction)updateStartAtLogin:(id)sender {
+    [self setStartAtLogin:![self startAtLogin]];
+}
+
+- (NSURL *) appURL {
+    return [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+}
+
+
+- (BOOL) startAtLogin {
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    return [self willStartAtLogin:url];
+}
+
+- (void) setStartAtLogin:(BOOL)startAtLogin {
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    [self setStartAtLogin:url enabled:startAtLogin];
+    [storage setLoadAtStartup: startAtLogin];
+    [startAtLoginMenuItem setState: [self startAtLogin] ? NSOnState : NSOffState];
+}
+
+- (BOOL) willStartAtLogin:(NSURL *)itemURL {
     Boolean foundIt=false;
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     if (loginItems) {
@@ -36,8 +73,7 @@
     return (BOOL)foundIt;
 }
 
-+ (void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled
-{
+- (void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled {
     LSSharedFileListItemRef existingItem = NULL;
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);

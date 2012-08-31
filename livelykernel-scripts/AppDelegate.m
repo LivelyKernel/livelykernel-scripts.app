@@ -18,12 +18,15 @@
 //    [self extendEnv];
     storageController = [[StorageController alloc] init];
     [storageController loadData];
+    loginController = [[StartAtLoginManager alloc] initWithStorage:storageController];
+    [loginController setupAutoStartup];
+
     [self initStatusMenu];
     [self updateViewFromServerStatus];
     if (!isServerAlive) { [self startOrStopServer:nil]; }
     [self startServerWatcher];
     [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
-    [self setupAutoStartup];
+    
     
 //    NSArray *running = [[NSWorkspace sharedWorkspace] runningApplications];
 //    for (NSRunningApplication *app in running) {
@@ -31,21 +34,10 @@
 //    }
 }
 
--(NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-//    if (isServerAlive) {
-//        [self startOrStopServer:nil];
-//    }
-    return NSTerminateNow;
-}
-
--(void) setupAutoStartup {
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    BOOL willStartAtLogin = [StartAtLoginManager willStartAtLogin:url];
-    NSLog(@"start at login: %@", willStartAtLogin ? @"Yes" : @"No");
-    if (!willStartAtLogin) {
-        [StartAtLoginManager setStartAtLogin:url enabled:true];
-    }
-//    [StartAtLoginManager setStartAtLogin:url enabled:false];
+-(void)applicationWillTerminate:(NSNotification *)notification {
+   if (isServerAlive) {
+       // [self startOrStopServer:nil];
+   }
 }
 
 - (void)extendEnv {

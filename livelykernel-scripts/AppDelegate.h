@@ -13,6 +13,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     StorageController *storageController;
+    StartAtLoginManager *loginController;
     NSTimer *serverWatchLoop;
     NSStatusItem *statusItem;
     NSURL *lkRepositoryLocation;

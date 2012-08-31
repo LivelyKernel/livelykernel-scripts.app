@@ -7,8 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StorageController.h"
 
-@interface StartAtLoginManager : NSObject
-+ (BOOL) willStartAtLogin:(NSURL *)itemURL;
-+ (void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled;
+@interface StartAtLoginManager : NSObject {
+    IBOutlet NSMenuItem *startAtLoginMenuItem;
+}
+
+- (id)initWithStorage:(StorageController*)storage;
+- (void) setupAutoStartup;
+- (IBAction)updateStartAtLogin:(id)sender;
+
+@property StorageController *storage;
+@property BOOL startAtLogin;
+
 @end
