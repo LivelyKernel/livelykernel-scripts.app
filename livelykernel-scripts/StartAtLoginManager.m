@@ -10,16 +10,10 @@
 
 @implementation StartAtLoginManager
 
-@synthesize storage;
-
--(id)initWithStorage:(StorageController*)storageRef {
-    self = [self init];
-    [self setStorage: storageRef];
-    return self;
-}
+@synthesize storageController;
 
 -(void) setupAutoStartup {
-    if ([storage isFirstStart]) {
+    if ([storageController isFirstStart]) {
         NSLog(@"Starting for the first time, enabling start at login");
         [self setStartAtLogin:YES];
     } else {
@@ -27,7 +21,7 @@
     }
 }
 
-- (IBAction)updateStartAtLogin:(id)sender {
+- (IBAction)toggleStartAtLogin:(id)sender {
     [self setStartAtLogin:![self startAtLogin]];
 }
 
@@ -44,7 +38,7 @@
 - (void) setStartAtLogin:(BOOL)startAtLogin {
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     [self setStartAtLogin:url enabled:startAtLogin];
-    [storage setLoadAtStartup: startAtLogin];
+    [storageController setLoadAtStartup: startAtLogin];
     [startAtLoginMenuItem setState: [self startAtLogin] ? NSOnState : NSOffState];
 }
 

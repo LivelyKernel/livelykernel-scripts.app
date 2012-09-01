@@ -14,7 +14,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     StorageController *storageController;
-    StartAtLoginManager *loginController;
+    IBOutlet StartAtLoginManager *loginController;
     IBOutlet LKScriptsController *lkScriptsController;
     
     NSStatusItem *statusItem;

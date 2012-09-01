@@ -12,11 +12,14 @@
 
 - (void)awakeFromNib {
     [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
+    [self setupStatusItem];
+
     storageController = [[StorageController alloc] init];
     [storageController loadData];
-//    loginController.storageController = storageController;
+
+    loginController.storageController = storageController;
     [loginController setupAutoStartup];
-    [self setupStatusItem];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(serverStateChanged:)

@@ -13,11 +13,10 @@
     IBOutlet NSMenuItem *startAtLoginMenuItem;
 }
 
-- (id)initWithStorage:(StorageController*)storage;
 - (void) setupAutoStartup;
-- (IBAction)updateStartAtLogin:(id)sender;
+- (IBAction)toggleStartAtLogin:(id)sender;
 
-@property StorageController *storage;
+@property StorageController *storageController;
 @property BOOL startAtLogin;
 
 @end
