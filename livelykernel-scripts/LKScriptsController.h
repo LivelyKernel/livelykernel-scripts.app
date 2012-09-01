@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CommandLineInterface.h"
 
 @interface LKScriptsController : NSObject {
     NSTimer *serverWatchLoop;
@@ -15,7 +16,7 @@
 
 - (id) initWithStatusItem:(NSStatusItem*)appStatusItem;
 - (void) updateFromServerStatus;
-- (IBAction) startOrStopServer:(id)sender;
+- (IBAction) startOrStopServer:(id)sender thenDo:(void (^)())block;
 
 @property (readonly) BOOL isServerAlive;
 @property (nonatomic) NSStatusItem *statusItem;

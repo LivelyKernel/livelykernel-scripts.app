@@ -17,7 +17,7 @@
     [loginController setupAutoStartup];
     lkScriptsController = [[LKScriptsController alloc] initWithStatusItem: [self setupStatusItem]];
     if (![lkScriptsController isServerAlive]) {
-        [lkScriptsController startOrStopServer:nil];
+        [lkScriptsController startOrStopServer:nil thenDo: nil];
     }
     
 //    NSArray *running = [[NSWorkspace sharedWorkspace] runningApplications];
@@ -26,10 +26,15 @@
 //    }
 }
 
--(void)applicationWillTerminate:(NSNotification *)notification {
-   if ([lkScriptsController isServerAlive]) {
-       // [self startOrStopServer:nil];
-   }
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)app {
+    if ([lkScriptsController isServerAlive]) {
+        [lkScriptsController startOrStopServer:nil thenDo: ^ {
+            [app replyToApplicationShouldTerminate: YES];
+        }];
+        
+        return NSTerminateLater;
+    }
+    return NSTerminateNow;
 }
 
 - (NSStatusItem *) setupStatusItem {

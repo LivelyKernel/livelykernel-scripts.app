@@ -24,11 +24,7 @@
     return self;
 }
 
-- (BOOL)isServerAlive {
-    // get `lk server --info`
-    NSArray *arguments = [NSArray arrayWithObjects: @"lk server --info",nil];
-    NSString* serverInfoString = [self runLKServerCmdWithArgs:arguments waitForResult:true];
-    
+- (void)parseServerInfoJSON:(NSString*)serverInfoString thenDo:(void(^)(BOOL isAlive))block {
     // we are currently only interested in "alive"
     Boolean alive = false;
     NSInteger pid = 0;
@@ -55,7 +51,14 @@
     }
     
     //    NSLog(@"alive: %@, pid: %lo", alive ? @"true" : @"false", pid);
-    return alive;
+    block(alive);
+}
+
+- (void) getServerStateThenDo:(void (^)(BOOL isAlive))block {
+    [self runLKServerCmd:@"lk server --info"
+                whenDone: ^(NSString*out){
+                    [self parseServerInfoJSON: out thenDo:block];
+                }];
 }
 
 - (void) serverStateChanged {
@@ -84,11 +87,11 @@
 }
 
 - (IBAction)updatePartsBin:(id)sender {
-    [self runAndShowLKServerCmdWithArgs: [NSArray arrayWithObject:@"lk partsbin"]];
+    [self runAndShowLKServerCmd: @"lk partsbin"];
 }
 
 - (IBAction)updateCoreRepo:(id)sender {
-    [self runAndShowLKServerCmdWithArgs: [NSArray arrayWithObject:@"lk workspace -u"]];
+    [self runAndShowLKServerCmd: @"lk workspace -u"];
 }
 
 - (IBAction)updateUserDirectory:(id)sender {
@@ -99,16 +102,40 @@
 }
 
 - (IBAction)informAboutServerState:(id)sender {
-    [self runAndShowLKServerCmdWithArgs: [NSArray arrayWithObjects:@"lk server --info", nil]];
+    [self runAndShowLKServerCmd: @"lk server --info"];
 }
 
-- (IBAction) startOrStopServer:(id)sender {
-    // non-blocking
-    NSString *arg = [self isServerAlive] ? @"lk server --kill" : @"lk server";
-    [self runLKServerCmdWithArgs:[NSArray arrayWithObjects: arg,nil] waitForResult:false];
+- (void) startOrStopServer:(id)sender thenDo:(void (^)())block {
+    [self runLKServerCmd:[self isServerAlive] ? @"lk server --kill" : @"lk server"
+                onOutput:^ (NSString *output) { }
+                whenDone:block];
     [self serverStateChanged];
 }
 
+- (void) runAndShowLKServerCmd:(NSString*)cmd {
+    [self runLKServerCmd:cmd
+                whenDone: ^(NSString *out) { [self showInHUD:out]; }];
+//    __block NSString* allOut;
+//    [self runLKServerCmd:cmd
+//                onOutput:^(NSString*out) {
+//                    allOut = [allOut stringByAppendingString:out];
+//                }
+//                whenDone:^ {
+//                    [self showInHUD:allOut];
+//                }];
+}
+
+- (void) runLKServerCmd:(NSString*)cmd whenDone:(void (^)(NSString* output))doneBlock {
+    __block NSString* allOut;
+    [self runLKServerCmd:cmd
+                onOutput:^(NSString*out) { allOut = [allOut stringByAppendingString:out]; }
+                whenDone:^ { doneBlock(allOut); }];
+}
+
+- (void) runLKServerCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)())doneBlock {
+//    CommandLineInterface *commandLine= [[CommandLineInterface alloc] init];
+//    [commandLine runCmd:cmd onOutput:outputBlock whenDone:doneBlock];
+}
 //- (IBAction)chooseServerLocation:(id)sender {
 //    // Create the File Open Dialog class.
 //    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
@@ -131,67 +158,12 @@
 //    }
 //}
 
-- (void) runAndShowLKServerCmdWithArgs:(NSArray *)arguments {
-    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c",nil];
-    NSArray *allArguments = [baseArguments arrayByAddingObjectsFromArray:arguments];
-    NSFileHandle *out = [self runCmd:@"/bin/bash" args:allArguments];
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self
-                           selector:@selector(readLKServerCmdOutput:)
-                               name:NSFileHandleReadCompletionNotification
-                             object:out];
-    [out readInBackgroundAndNotify];
-}
-
--(void) readLKServerCmdOutput: (NSNotification *)aNotification {
-    NSData *data = [[aNotification userInfo] objectForKey:@"NSFileHandleNotificationDataItem"];
-    if ([data length] == 0) return;
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [self performSelectorOnMainThread:@selector(showInHUD:)
-                           withObject:string
-                        waitUntilDone:false];
-    [[aNotification object] readInBackgroundAndNotify];
-}
-
 -(void) showInHUD:(NSString*)string {
     if (![scriptOutputWindow isVisible]){
         [scriptOutputWindow makeKeyAndOrderFront: nil];
     }
     [scriptText setTextColor:[NSColor whiteColor]];
     [[[scriptText textStorage] mutableString] appendString: string];
-}
-
-- (NSString*) runLKServerCmdWithArgs:(NSArray *)arguments waitForResult:(Boolean)wait {
-    NSArray *baseArguments = [NSArray arrayWithObjects: @"--login", @"-c",nil];
-    NSArray *allArguments = [baseArguments arrayByAddingObjectsFromArray:arguments];
-    return [self runCmd:@"/bin/bash" args:allArguments waitForResult:wait];
-}
-
-- (NSString*) runCmd:(NSString*)cmd args:(NSArray *)arguments waitForResult:(Boolean)wait {
-    NSFileHandle *file = [self runCmd:cmd args:arguments];
-    if (wait) {
-        NSData *data = [file readDataToEndOfFile];
-        NSString *string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-        return string;
-    }
-    return nil;
-}
-
-- (NSFileHandle*) runCmd:(NSString*)cmd args:(NSArray *)arguments {
-    NSTask *task = [[NSTask alloc] init];
-    NSPipe *pipe = [NSPipe pipe];
-    
-    [task setLaunchPath: cmd];
-    [task setArguments: arguments];
-    [task setStandardOutput: pipe];
-    //The magic line that keeps your log where it belongs
-    [task setStandardInput:[NSPipe pipe]];
-    
-    NSFileHandle *file = [pipe fileHandleForReading];
-    [task launch];
-    return file;
 }
 
 

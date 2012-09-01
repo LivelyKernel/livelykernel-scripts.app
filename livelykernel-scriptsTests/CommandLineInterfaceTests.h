@@ -7,7 +7,10 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "CommandLineInterface.h"
 
-@interface livelykernel_scriptsTests : SenTestCase
+@interface CommandLineInterfaceTests : SenTestCase
+
+@property BOOL signalWaitDone;
 
 @end

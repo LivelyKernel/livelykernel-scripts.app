@@ -17,6 +17,7 @@
 		E1D254BB15ED6177008B5832 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D254BA15ED6177008B5832 /* ServiceManagement.framework */; };
 		E1DD8F4615F13191007910AE /* StorageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1DD8F4515F13191007910AE /* StorageController.m */; };
 		E1DD8F4915F1619A007910AE /* LKScriptsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1DD8F4815F1619A007910AE /* LKScriptsController.m */; };
+		E1DD8F4C15F18B82007910AE /* CommandLineInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = E1DD8F4B15F18B82007910AE /* CommandLineInterface.m */; };
 		E1E3FE6E15E84CA700EEF7CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */; };
 		E1E3FE7815E84CA700EEF7CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE7615E84CA700EEF7CD /* InfoPlist.strings */; };
 		E1E3FE7A15E84CA700EEF7CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE7915E84CA700EEF7CD /* main.m */; };
@@ -25,7 +26,7 @@
 		E1E3FE8C15E84CA800EEF7CD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */; };
 		E1E3FE8D15E84CA800EEF7CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */; };
 		E1E3FE9515E84CA800EEF7CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FE9315E84CA800EEF7CD /* InfoPlist.strings */; };
-		E1E3FE9815E84CA800EEF7CD /* livelykernel_scriptsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */; };
+		E1E3FE9815E84CA800EEF7CD /* CommandLineInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3FE9715E84CA800EEF7CD /* CommandLineInterfaceTests.m */; };
 		E1E3FEAA15E8592400EEF7CD /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1E3FEA915E8592400EEF7CD /* Application.xib */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,8 @@
 		E1DD8F4515F13191007910AE /* StorageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageController.m; sourceTree = "<group>"; };
 		E1DD8F4715F1619A007910AE /* LKScriptsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKScriptsController.h; sourceTree = "<group>"; };
 		E1DD8F4815F1619A007910AE /* LKScriptsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKScriptsController.m; sourceTree = "<group>"; };
+		E1DD8F4A15F18B82007910AE /* CommandLineInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandLineInterface.h; sourceTree = "<group>"; };
+		E1DD8F4B15F18B82007910AE /* CommandLineInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandLineInterface.m; sourceTree = "<group>"; };
 		E1E3FE6915E84CA700EEF7CD /* livelykernel-scripts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "livelykernel-scripts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E3FE6D15E84CA700EEF7CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E1E3FE7015E84CA700EEF7CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -71,8 +74,8 @@
 		E1E3FE8B15E84CA800EEF7CD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		E1E3FE9215E84CA800EEF7CD /* livelykernel-scriptsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "livelykernel-scriptsTests-Info.plist"; sourceTree = "<group>"; };
 		E1E3FE9415E84CA800EEF7CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E1E3FE9615E84CA800EEF7CD /* livelykernel_scriptsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = livelykernel_scriptsTests.h; sourceTree = "<group>"; };
-		E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = livelykernel_scriptsTests.m; sourceTree = "<group>"; };
+		E1E3FE9615E84CA800EEF7CD /* CommandLineInterfaceTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandLineInterfaceTests.h; sourceTree = "<group>"; };
+		E1E3FE9715E84CA800EEF7CD /* CommandLineInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommandLineInterfaceTests.m; sourceTree = "<group>"; };
 		E1E3FEA915E8592400EEF7CD /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +161,8 @@
 				E1DD8F4715F1619A007910AE /* LKScriptsController.h */,
 				E1DD8F4815F1619A007910AE /* LKScriptsController.m */,
 				E1E3FE7415E84CA700EEF7CD /* Supporting Files */,
+				E1DD8F4A15F18B82007910AE /* CommandLineInterface.h */,
+				E1DD8F4B15F18B82007910AE /* CommandLineInterface.m */,
 			);
 			path = "livelykernel-scripts";
 			sourceTree = "<group>";
@@ -179,8 +184,8 @@
 		E1E3FE9015E84CA800EEF7CD /* livelykernel-scriptsTests */ = {
 			isa = PBXGroup;
 			children = (
-				E1E3FE9615E84CA800EEF7CD /* livelykernel_scriptsTests.h */,
-				E1E3FE9715E84CA800EEF7CD /* livelykernel_scriptsTests.m */,
+				E1E3FE9615E84CA800EEF7CD /* CommandLineInterfaceTests.h */,
+				E1E3FE9715E84CA800EEF7CD /* CommandLineInterfaceTests.m */,
 				E1E3FE9115E84CA800EEF7CD /* Supporting Files */,
 			);
 			path = "livelykernel-scriptsTests";
@@ -313,6 +318,7 @@
 				E13811A315EF0446007C2A3B /* StartAtLoginManager.m in Sources */,
 				E1DD8F4615F13191007910AE /* StorageController.m in Sources */,
 				E1DD8F4915F1619A007910AE /* LKScriptsController.m in Sources */,
+				E1DD8F4C15F18B82007910AE /* CommandLineInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1E3FE9815E84CA800EEF7CD /* livelykernel_scriptsTests.m in Sources */,
+				E1E3FE9815E84CA800EEF7CD /* CommandLineInterfaceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
