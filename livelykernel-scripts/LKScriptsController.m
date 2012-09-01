@@ -11,16 +11,10 @@
 @implementation LKScriptsController
 
 @synthesize isServerAlive=_isServerAlive;
-@synthesize statusItem, statusMenu, startStopMenuItem, scriptOutputWindow, scriptText;
 
-- (id) initWithStatusItem: (NSStatusItem *)appStatusItem {
+- (id) init {
     self = [super init];
-    [self setStatusItem: appStatusItem];
-    [self setStatusMenu: [statusItem menu]];
-    [self setStartStopMenuItem: [[self statusMenu] itemAtIndex:2]]; // FIXME
     [self updateFromServerStatus];
-    [self startServerWatcher];
-    [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
     return self;
 }
 
@@ -78,12 +72,8 @@
 }
 
 - (void) updateFromServerStatus {
-    BOOL isServerAlive = [self isServerAlive];
-    NSString* imageNamePart = isServerAlive ? @"lk-running" : @"lk-not-running";
-    NSString* imageName = [[NSBundle mainBundle] pathForResource:imageNamePart ofType:@"png"];
-    NSImage* lkStatusImage = [[NSImage alloc] initWithContentsOfFile:imageName];
-    [statusItem setImage: lkStatusImage];
-    [[self startStopMenuItem] setTitle: (isServerAlive ? @"Stop server" : @"Start server")];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"LKServerState" object:self];
 }
 
 - (IBAction)updatePartsBin:(id)sender {
@@ -114,7 +104,7 @@
 
 - (void) runAndShowLKServerCmd:(NSString*)cmd {
     [self runLKServerCmd:cmd
-                whenDone: ^(NSString *out) { [self showInHUD:out]; }];
+                whenDone: ^(NSString *out) { NSLog(@"%@: %@", cmd, out); }];
 //    __block NSString* allOut;
 //    [self runLKServerCmd:cmd
 //                onOutput:^(NSString*out) {
@@ -157,14 +147,5 @@
 //        [self inform: [selection path]];
 //    }
 //}
-
--(void) showInHUD:(NSString*)string {
-    if (![scriptOutputWindow isVisible]){
-        [scriptOutputWindow makeKeyAndOrderFront: nil];
-    }
-    [scriptText setTextColor:[NSColor whiteColor]];
-    [[[scriptText textStorage] mutableString] appendString: string];
-}
-
 
 @end

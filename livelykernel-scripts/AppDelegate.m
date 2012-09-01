@@ -11,14 +11,21 @@
 @implementation AppDelegate
 
 - (void)awakeFromNib {
+    [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
     storageController = [[StorageController alloc] init];
     [storageController loadData];
-    loginController = [[StartAtLoginManager alloc] initWithStorage:storageController];
+//    loginController.storageController = storageController;
     [loginController setupAutoStartup];
-    lkScriptsController = [[LKScriptsController alloc] initWithStatusItem: [self setupStatusItem]];
-    if (![lkScriptsController isServerAlive]) {
-        [lkScriptsController startOrStopServer:nil thenDo: nil];
-    }
+    [self setupStatusItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(serverStateChanged:)
+                                                 name:@"LKServerState"object:nil];
+    [lkScriptsController startServerWatcher];
+    
+//    if (![lkScriptsController isServerAlive]) {
+//        [lkScriptsController startOrStopServer:nil thenDo: nil];
+//    }
     
 //    NSArray *running = [[NSWorkspace sharedWorkspace] runningApplications];
 //    for (NSRunningApplication *app in running) {
@@ -26,8 +33,19 @@
 //    }
 }
 
+-(void) serverStateChanged:(NSNotification*)note {
+    BOOL isAlive = lkScriptsController.isServerAlive;
+    NSLog(@"serverStateChanged alive? %@", isAlive ? @"yes" : @"not");
+    
+    NSString* imageNamePart = isAlive ? @"lk-running" : @"lk-not-running";
+    NSString* imageName = [[NSBundle mainBundle] pathForResource:imageNamePart ofType:@"png"];
+    NSImage* lkStatusImage = [[NSImage alloc] initWithContentsOfFile:imageName];
+    [statusItem setImage: lkStatusImage];
+    [startStopMenuItem setTitle: (isAlive ? @"Stop server" : @"Start server")];
+}
+
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)app {
-    if ([lkScriptsController isServerAlive]) {
+    if (lkScriptsController.isServerAlive) {
         [lkScriptsController startOrStopServer:nil thenDo: ^ {
             [app replyToApplicationShouldTerminate: YES];
         }];
@@ -37,11 +55,19 @@
     return NSTerminateNow;
 }
 
-- (NSStatusItem *) setupStatusItem {
-    NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+- (void) setupStatusItem {
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
     [statusItem setHighlightMode:YES];
-    return statusItem;
+    [self serverStateChanged: nil];
+}
+
+-(void) showInHUD:(NSString*)string {
+    if (![scriptOutputWindow isVisible]){
+        [scriptOutputWindow makeKeyAndOrderFront: nil];
+    }
+    [scriptText setTextColor:[NSColor whiteColor]];
+    [[[scriptText textStorage] mutableString] appendString: string];
 }
 
 - (void) inform:msg {

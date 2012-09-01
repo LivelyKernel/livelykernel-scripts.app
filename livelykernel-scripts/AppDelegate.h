@@ -15,8 +15,14 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     StorageController *storageController;
     StartAtLoginManager *loginController;
-    LKScriptsController *lkScriptsController;
+    IBOutlet LKScriptsController *lkScriptsController;
+    
+    NSStatusItem *statusItem;
+    IBOutlet NSMenuItem *startStopMenuItem;
     IBOutlet NSMenu *statusMenu;
+    IBOutlet NSWindow *scriptOutputWindow;
+    IBOutlet NSTextView *scriptText;
+
 }
 -(void) inform:msg;
 @end

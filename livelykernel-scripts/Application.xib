@@ -1421,7 +1421,7 @@
 											<string key="NSFrameSize">{481, 281}</string>
 											<reference key="NSSuperview" ref="463832388"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSNextKeyView" ref="185561864"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="51827197">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1695,7 +1695,7 @@ wGw</bytes>
 							<string key="NSFrameSize">{481, 281}</string>
 							<reference key="NSSuperview" ref="975422729"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="185561864"/>
+							<reference key="NSNextKeyView" ref="463832388"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133680</int>
 							<reference key="NSVScroller" ref="185561864"/>
@@ -1712,7 +1712,7 @@ wGw</bytes>
 					<reference key="NSNextKeyView" ref="967709172"/>
 					<string key="NSReuseIdentifierKey">_NS:21</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -2353,11 +2353,43 @@ wGw</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">lkScriptsController</string>
+						<reference key="source" ref="980524140"/>
+						<reference key="destination" ref="762100487"/>
+					</object>
+					<int key="connectionID">1400</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">statusMenu</string>
 						<reference key="source" ref="980524140"/>
 						<reference key="destination" ref="612184616"/>
 					</object>
-					<int key="connectionID">1394</int>
+					<int key="connectionID">1401</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">startStopMenuItem</string>
+						<reference key="source" ref="980524140"/>
+						<reference key="destination" ref="563587317"/>
+					</object>
+					<int key="connectionID">1402</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">scriptText</string>
+						<reference key="source" ref="980524140"/>
+						<reference key="destination" ref="868203810"/>
+					</object>
+					<int key="connectionID">1403</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">scriptOutputWindow</string>
+						<reference key="source" ref="980524140"/>
+						<reference key="destination" ref="654525597"/>
+					</object>
+					<int key="connectionID">1404</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -3835,24 +3867,42 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1399</int>
+			<int key="maxID">1404</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">statusMenu</string>
-						<string key="NS.object.0">NSMenu</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">statusMenu</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="lkScriptsController">LKScriptsController</string>
+						<string key="scriptOutputWindow">NSWindow</string>
+						<string key="scriptText">NSTextView</string>
+						<string key="startStopMenuItem">NSMenuItem</string>
+						<string key="statusMenu">NSMenu</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="lkScriptsController">
+							<string key="name">lkScriptsController</string>
+							<string key="candidateClassName">LKScriptsController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scriptOutputWindow">
+							<string key="name">scriptOutputWindow</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scriptText">
+							<string key="name">scriptText</string>
+							<string key="candidateClassName">NSTextView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="startStopMenuItem">
+							<string key="name">startStopMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="statusMenu">
 							<string key="name">statusMenu</string>
 							<string key="candidateClassName">NSMenu</string>
 						</object>
-					</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AppDelegate.h</string>
@@ -3862,16 +3912,36 @@ wGw</bytes>
 					<string key="className">LKScriptsController</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="informAboutServerState:">id</string>
 						<string key="openLivelyInBrowser:">id</string>
+						<string key="startOrStopServer:thenDo:">id</string>
+						<string key="updateCoreRepo:">id</string>
 						<string key="updatePartsBin:">id</string>
+						<string key="updateUserDirectory:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="informAboutServerState:">
+							<string key="name">informAboutServerState:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="openLivelyInBrowser:">
 							<string key="name">openLivelyInBrowser:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="startOrStopServer:thenDo:">
+							<string key="name">startOrStopServer:thenDo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="updateCoreRepo:">
+							<string key="name">updateCoreRepo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="updatePartsBin:">
 							<string key="name">updatePartsBin:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="updateUserDirectory:">
+							<string key="name">updateUserDirectory:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

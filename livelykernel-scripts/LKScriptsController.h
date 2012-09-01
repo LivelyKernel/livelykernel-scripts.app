@@ -14,15 +14,9 @@
 //    NSURL *lkRepositoryLocation;
 }
 
-- (id) initWithStatusItem:(NSStatusItem*)appStatusItem;
-- (void) updateFromServerStatus;
+//- (void) updateFromServerStatus;
+- (void) startServerWatcher;
 - (IBAction) startOrStopServer:(id)sender thenDo:(void (^)())block;
 
 @property (readonly) BOOL isServerAlive;
-@property (nonatomic) NSStatusItem *statusItem;
-@property (nonatomic) NSMenuItem *startStopMenuItem;
-@property (nonatomic) NSMenu *statusMenu;
-@property (nonatomic) NSWindow *scriptOutputWindow;
-@property (nonatomic) NSTextView *scriptText;
-
 @end
