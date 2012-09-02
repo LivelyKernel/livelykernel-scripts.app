@@ -48,12 +48,16 @@
 }
 
 - (void) startServerWatcher {
-    if (serverWatchLoop) [serverWatchLoop invalidate];
-    serverWatchLoop = [NSTimer scheduledTimerWithTimeInterval:2.0
+    [self stopServerWatcher];
+    serverWatchLoop = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                        target:self
-                                                     selector:@selector(updateFromServerStatus)
+                                                     selector:@selector(fetchServerStatus)
                                                      userInfo: nil
                                                       repeats:YES];
+}
+
+- (void) stopServerWatcher {
+    if (serverWatchLoop) [serverWatchLoop invalidate];
 }
 
 - (void) fetchServerStatus {
@@ -85,7 +89,11 @@
 }
 
 - (IBAction)startOrStopServer:(id)sender {
-    void (^updateBlock)() = ^{ [self fetchServerStatus]; };
+    [self stopServerWatcher];
+    void (^updateBlock)() = ^{
+        [self fetchServerStatus];
+        [self startServerWatcher];
+    };
     if (self.isServerAlive) {
         [self stopServerThenDo:updateBlock];
     } else {

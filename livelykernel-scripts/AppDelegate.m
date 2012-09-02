@@ -20,15 +20,11 @@
     loginController.storageController = storageController;
     [loginController setupAutoStartup];
     
-    
     NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
     [noteCenter addObserver:self selector:@selector(serverStateChanged:) name:@"LKServerState"object:nil];
     [noteCenter addObserver:self selector:@selector(showScriptOutput:) name:@"LKScriptOutput"object:nil];
-//    [lkScriptsController startServerWatcher];
-//    [lkScriptsController fetchServerStatus];
-//    if (![lkScriptsController isServerAlive]) {
-//        [lkScriptsController startOrStopServer:nil thenDo: nil];
-//    }
+
+    [lkScriptsController startServerWatcher];
 }
 
 -(void) serverStateChanged:(NSNotification*)note {
