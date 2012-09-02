@@ -19,8 +19,8 @@
     // subscribes to data changes of file handle and triggers outputBlock when data comes in
     // in case it is triggered and no data is available we interpret that as file close. Is this correct?
     NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    id observer;
+    __block NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    __block id observer;
     void (^responseBlock)(NSNotification*) = ^(NSNotification *note) {
         NSData *data = [[note userInfo] objectForKey:@"NSFileHandleNotificationDataItem"];
         if ([data length] == 0) {
