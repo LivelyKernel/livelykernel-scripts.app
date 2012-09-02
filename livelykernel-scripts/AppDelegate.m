@@ -24,6 +24,7 @@
     [noteCenter addObserver:self selector:@selector(serverStateChanged:) name:@"LKServerState"object:nil];
     [noteCenter addObserver:self selector:@selector(showScriptOutput:) name:@"LKScriptOutput"object:nil];
 
+    [lkScriptsController fetchServerStatus];
     [lkScriptsController startServerWatcher];
 }
 
@@ -53,7 +54,6 @@
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
     [statusItem setHighlightMode:YES];
-    [self serverStateChanged: nil];
 }
 
 -(void) showScriptOutput:(NSNotification*)note {
