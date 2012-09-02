@@ -12,11 +12,10 @@
 
 @synthesize isServerAlive=_isServerAlive;
 
-- (id) init {
-    self = [super init];
-    [self updateFromServerStatus];
-    return self;
-}
+//- (id) init {
+//    self = [super init];
+//    return self;
+//}
 
 - (void)parseServerInfoJSON:(NSString*)serverInfoString thenDo:(void(^)(BOOL isAlive))block {
     // we are currently only interested in "alive"
@@ -43,8 +42,6 @@
         }
         [infoScanner scanString: @"," intoString:NULL];
     }
-    
-    //    NSLog(@"alive: %@, pid: %lo", alive ? @"true" : @"false", pid);
     block(alive);
 }
 
@@ -55,15 +52,8 @@
                 }];
 }
 
-- (void) serverStateChanged {
-    [NSTimer scheduledTimerWithTimeInterval:0.2
-                                     target:self
-                                   selector:@selector(updateFromServerStatus)
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
 - (void) startServerWatcher {
+    if (serverWatchLoop) [serverWatchLoop invalidate];
     serverWatchLoop = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                        target:self
                                                      selector:@selector(updateFromServerStatus)
@@ -71,9 +61,14 @@
                                                       repeats:YES];
 }
 
-- (void) updateFromServerStatus {
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"LKServerState" object:self];
+- (void) fetchServerStatus {
+    [self getServerStateThenDo: ^ (BOOL isAlive){
+        NSLog(@"getServerStateThenDo %@", isAlive ? @"y" : @"n");
+        _isServerAlive = isAlive;
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"LKServerState" object:self];
+    }];
+
 }
 
 - (IBAction)updatePartsBin:(id)sender {
@@ -95,37 +90,73 @@
     [self runAndShowLKServerCmd: @"lk server --info"];
 }
 
-- (void) startOrStopServer:(id)sender thenDo:(void (^)())block {
-    [self runLKServerCmd:[self isServerAlive] ? @"lk server --kill" : @"lk server"
-                onOutput:^ (NSString *output) { }
-                whenDone:block];
-    [self serverStateChanged];
+- (IBAction)startOrStopServer:(id)sender {
+    [self startOrStopServerThenDo:^{ [self fetchServerStatus]; }];
+}
+
+- (void) startServerThenDo:(void (^)())block {
+    __block BOOL thenDoBlockRun = NO;
+    [self runLKServerCmd:@"lk server"
+                onOutput:^ (NSString *output) {
+                    if (!thenDoBlockRun) {
+                        block();
+                        thenDoBlockRun = YES;
+                    }
+                }
+                whenDone:^ (NSString *out) { }];
+}
+
+- (void) stopServerThenDo:(void (^)())block {
+    NSLog(@"stopping server ...");
+    [self runLKServerCmdSync:@"lk server --kill"];
+    block();
+//    CommandLineInterface *commandLine= [[CommandLineInterface alloc] init];
+//    NSTask *task = [commandLine cmdTask:@"lk server --kill"];
+//    task.terminationHandler = ^(NSTask *task) {
+//            block();
+//    };
+//    [task launch];
+//    [task waitUntilExit];
+
+//    [self runLKServerCmd:@"lk server --kill"
+//                onOutput:^(NSString *output) {     NSLog(@"stopping server ... %@", output); }
+//                whenDone:block];
+}
+- (void) startOrStopServerThenDo:(void (^)())block {    
+    if (self.isServerAlive) {
+        [self stopServerThenDo:block];
+    } else {
+        [self startServerThenDo:block];
+    }
 }
 
 - (void) runAndShowLKServerCmd:(NSString*)cmd {
     [self runLKServerCmd:cmd
                 whenDone: ^(NSString *out) { NSLog(@"%@: %@", cmd, out); }];
-//    __block NSString* allOut;
-//    [self runLKServerCmd:cmd
-//                onOutput:^(NSString*out) {
-//                    allOut = [allOut stringByAppendingString:out];
-//                }
-//                whenDone:^ {
-//                    [self showInHUD:allOut];
-//                }];
+}
+
+- (NSString*) runLKServerCmdSync:(NSString*)cmd {
+    __block NSString *out;
+    [self runLKServerCmd:(NSString*)cmd
+                onOutput:^(NSString *stdout) {}
+                whenDone:^(NSString* output) { out = output; }
+                  isSync:YES];
+    return out;
 }
 
 - (void) runLKServerCmd:(NSString*)cmd whenDone:(void (^)(NSString* output))doneBlock {
-    __block NSString* allOut;
-    [self runLKServerCmd:cmd
-                onOutput:^(NSString*out) { allOut = [allOut stringByAppendingString:out]; }
-                whenDone:^ { doneBlock(allOut); }];
+    [self runLKServerCmd:cmd onOutput:^(NSString*out) {} whenDone:doneBlock];
 }
 
-- (void) runLKServerCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)())doneBlock {
-//    CommandLineInterface *commandLine= [[CommandLineInterface alloc] init];
-//    [commandLine runCmd:cmd onOutput:outputBlock whenDone:doneBlock];
+- (void) runLKServerCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString* output))doneBlock {
+    [self runLKServerCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString* output))doneBlock isSync:NO];
 }
+
+- (void) runLKServerCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString* output))doneBlock isSync:(BOOL)isSync {
+    CommandLineInterface *commandLine= [[CommandLineInterface alloc] init];
+    [commandLine runCmd:cmd onOutput:outputBlock whenDone:doneBlock isSync: isSync];
+}
+
 //- (IBAction)chooseServerLocation:(id)sender {
 //    // Create the File Open Dialog class.
 //    NSOpenPanel* openDlg = [NSOpenPanel openPanel];

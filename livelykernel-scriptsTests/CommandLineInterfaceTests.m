@@ -42,11 +42,28 @@ CommandLineInterface *commandline;
                onOutput: ^(NSString *stdout) {
                    allout = [allout stringByAppendingString:stdout];
                }
-               whenDone: ^ {
+               whenDone: ^ (NSString *combinedOut) {
                    STAssertEqualObjects(@"test\n", allout, @"stdout did not match");
+                   STAssertEqualObjects(@"test\n", combinedOut, @"combinedOut did not match");
                    signalWaitDone = true;
                }];
     [self waitForCompletion:3];
+}
+
+- (void)testRunSimpleEchoSync {
+    __block NSString* stdoutString = @"";
+    __block NSString* alloutString;
+    [commandline runCmd:@"echo test"
+               onOutput: ^(NSString *stdout) {
+                   stdoutString = [stdoutString stringByAppendingString:stdout];
+               }
+               whenDone: ^ (NSString *combinedOut) {
+                   alloutString = combinedOut;
+                   signalWaitDone = true;
+               }
+                 isSync:YES];
+    STAssertEqualObjects(@"test\n", stdoutString, @"stdout did not match");
+    STAssertEqualObjects(@"test\n", alloutString, @"combinedOut did not match");
 }
 
 @end

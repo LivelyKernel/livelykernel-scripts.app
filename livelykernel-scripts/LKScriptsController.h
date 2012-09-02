@@ -14,9 +14,12 @@
 //    NSURL *lkRepositoryLocation;
 }
 
-//- (void) updateFromServerStatus;
 - (void) startServerWatcher;
-- (IBAction) startOrStopServer:(id)sender thenDo:(void (^)())block;
+- (void) fetchServerStatus;
+- (IBAction) startOrStopServer:(id)sender;
+- (void) stopServerThenDo:(void (^)())block;
+- (void) startServerThenDo:(void (^)())block;
+- (void) startOrStopServerThenDo:(void (^)())block;
 
 @property (readonly) BOOL isServerAlive;
 @end

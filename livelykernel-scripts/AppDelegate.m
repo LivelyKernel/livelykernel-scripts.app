@@ -24,22 +24,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(serverStateChanged:)
                                                  name:@"LKServerState"object:nil];
-    [lkScriptsController startServerWatcher];
-    
+//    [lkScriptsController startServerWatcher];
+//    [lkScriptsController fetchServerStatus];
 //    if (![lkScriptsController isServerAlive]) {
 //        [lkScriptsController startOrStopServer:nil thenDo: nil];
-//    }
-    
-//    NSArray *running = [[NSWorkspace sharedWorkspace] runningApplications];
-//    for (NSRunningApplication *app in running) {
-//        NSLog([app bundleIdentifier]);
 //    }
 }
 
 -(void) serverStateChanged:(NSNotification*)note {
     BOOL isAlive = lkScriptsController.isServerAlive;
-    NSLog(@"serverStateChanged alive? %@", isAlive ? @"yes" : @"not");
-    
+            NSLog(@"serverStateChanged %@", isAlive ? @"y" : @"n");
     NSString* imageNamePart = isAlive ? @"lk-running" : @"lk-not-running";
     NSString* imageName = [[NSBundle mainBundle] pathForResource:imageNamePart ofType:@"png"];
     NSImage* lkStatusImage = [[NSImage alloc] initWithContentsOfFile:imageName];
@@ -49,8 +43,9 @@
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)app {
     if (lkScriptsController.isServerAlive) {
-        [lkScriptsController startOrStopServer:nil thenDo: ^ {
-            [app replyToApplicationShouldTerminate: YES];
+        [lkScriptsController stopServerThenDo: ^ {
+            NSLog(@"shutdown complete...");
+                        [app replyToApplicationShouldTerminate: YES];
         }];
         
         return NSTerminateLater;

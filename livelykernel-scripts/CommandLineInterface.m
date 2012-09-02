@@ -10,50 +10,113 @@
 
 @implementation CommandLineInterface
 
-- (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)())doneBlock {
-    NSFileHandle *file = [self startCmd:cmd];
-    [self observe:file onOutput:outputBlock whenDone:doneBlock];
+- (void) runCmd:(NSString*)cmd {
+    NSTask *task = [self cmdTask:cmd];
+    [task launch];
 }
 
-- (void) observe:(NSFileHandle*)file onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)())doneBlock {
-    // subscribes to data changes of file handle and triggers outputBlock when data comes in
-    // in case it is triggered and no data is available we interpret that as file close. Is this correct?
-    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
-    __block NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+- (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString *stdoutCombined))doneBlock {
+    [self runCmd:cmd onOutput:outputBlock whenDone:doneBlock isSync:false];
+}
+
+- (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString*))doneBlock isSync:(BOOL)isSync {
+    NSLog(@"running cmd: %@ (%@)", cmd, isSync ? @"sync" : @"async");
+    // Creates a task for command to execute it and attaches a filehandle to
+    // stdout. Then runs the task and invokes the outputBlock when stdout data
+    // arrives
+    // note: since both the task itself and the read process are asynchronous,
+    // reaching task terminate does not mean that all data is read!
+    __block NSFileHandle *file;
     __block id observer;
-    void (^responseBlock)(NSNotification*) = ^(NSNotification *note) {
-        NSData *data = [[note userInfo] objectForKey:@"NSFileHandleNotificationDataItem"];
-        if ([data length] == 0) {
-            [center removeObserver:observer];
-            if (doneBlock) { doneBlock(); }
-            return;
-        }
+    __block NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    __block BOOL taskTerminated = NO;
+    __block BOOL endOfFileReached = NO;
+    __block NSString *stdoutCombined = @"";
+
+    //////////////////////////////////////
+    // deal with what comes from stdout //
+    //////////////////////////////////////
+    void (^readDataBlock) (NSData *) = ^ (NSData *data) {
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        outputBlock(string);
-        [file readInBackgroundAndNotify];
+//        NSLog(@"out: %@ (%@)", cmd, string);
+        if (outputBlock) outputBlock(string);
+        stdoutCombined = [stdoutCombined stringByAppendingString: string];
     };
-    observer = [center addObserverForName:NSFileHandleReadCompletionNotification
-                                   object:nil
-                                    queue:mainQueue
-                               usingBlock:responseBlock];
-    [file readInBackgroundAndNotify];
+
+    /////////////////////////////////////////////////////
+    // if we are async we use an observer to read data //
+    /////////////////////////////////////////////////////
+    if (!isSync) {
+        void (^responseBlock)(NSNotification*) = ^(NSNotification *note) {
+            NSData *data = [[note userInfo] objectForKey:@"NSFileHandleNotificationDataItem"];
+            if ([data length] == 0) {
+                [center removeObserver:observer];
+                endOfFileReached = YES;
+                if (taskTerminated) doneBlock(stdoutCombined);
+            }
+            readDataBlock(data);
+            [file readInBackgroundAndNotify];
+        };
+        observer = [center addObserverForName:NSFileHandleReadCompletionNotification
+                                       object:nil
+                                        queue:[NSOperationQueue mainQueue]
+                                   usingBlock:responseBlock];
+    }
+
+    ////////////////////////////////////
+    // attach reader to task's stdout //
+    ////////////////////////////////////
+    void (^setupTask)(NSTask*) = ^ (NSTask* task) {
+//        NSLog(@"setup: %@", cmd);
+        NSPipe *pipe = [NSPipe pipe];
+        [task setStandardOutput: pipe];
+        //The magic line that keeps your log where it belongs
+        [task setStandardInput:[NSPipe pipe]];
+        file = [pipe fileHandleForReading];
+        if (!isSync) [file readInBackgroundAndNotify];
+    };
+
+    ////////////////////////////////////////////////////////////
+    // clean things up when tasks terminates + call doneBlock //
+    ////////////////////////////////////////////////////////////
+    void (^onTaskTermination)() = ^ {
+//        NSLog(@"end: %@", cmd);
+        taskTerminated = YES;
+        if (endOfFileReached) doneBlock(stdoutCombined);
+    };
+
+    //////////////////////////
+    // now start the things //
+    //////////////////////////
+    [self setupTask:setupTask runCmd:cmd whenDone:onTaskTermination];
+    
+    //////////////////////////////////////////////////////////
+    // in case we want to wait do reading data here and now //
+    //////////////////////////////////////////////////////////
+    if (isSync) {
+        NSData *data = [file readDataToEndOfFile];
+        readDataBlock(data);
+        endOfFileReached = YES;
+        if (taskTerminated) doneBlock(stdoutCombined);
+        NSLog(@"sync end cmd: %@ (%@)", cmd, stdoutCombined);
+    }
 }
 
-- (NSFileHandle*) startCmd:(NSString*)cmd {
+- (void) setupTask:(void(^)(NSTask*))setupTaskBlock runCmd:(NSString*)cmd whenDone:(void(^)())doneBlock {
+    NSTask *task = [self cmdTask:cmd];
+    if (setupTaskBlock) { setupTaskBlock(task); }
+    if (doneBlock) { task.terminationHandler = ^(NSTask *task) { doneBlock(); }; }
+    [task launch];
+}
+
+- (NSTask*) cmdTask:(NSString*)cmd {
     // starts a bash asynchronously and passes cmd to it
-    // returns a file handle to stdout
     NSString *realCmd = @"/bin/bash";
     NSArray *arguments = [NSArray arrayWithObjects: @"--login", @"-c", cmd, nil];
     NSTask *task = [[NSTask alloc] init];
-    NSPipe *pipe = [NSPipe pipe];
     [task setLaunchPath: realCmd];
     [task setArguments: arguments];
-    [task setStandardOutput: pipe];
-    //The magic line that keeps your log where it belongs
-    [task setStandardInput:[NSPipe pipe]];
-    
-    NSFileHandle *file = [pipe fileHandleForReading];
-    [task launch];
-    return file;
+    return task;
 }
+
 @end

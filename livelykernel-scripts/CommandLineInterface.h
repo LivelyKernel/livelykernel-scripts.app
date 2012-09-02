@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface CommandLineInterface : NSObject
-- (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)())doneBlock;
+- (void) runCmd:(NSString*)cmd;
+- (NSTask*) cmdTask:(NSString*)cmd;
+- (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString *stdoutCombined))doneBlock;
+- (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString *stdoutCombined))doneBlock isSync:(BOOL)isSync;
 @end
