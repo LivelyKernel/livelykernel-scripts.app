@@ -24,13 +24,21 @@
     [noteCenter addObserver:self selector:@selector(serverStateChanged:) name:@"LKServerState"object:nil];
     [noteCenter addObserver:self selector:@selector(showScriptOutput:) name:@"LKScriptOutput"object:nil];
 
+    firstServerStateChanged = YES;
     [lkScriptsController fetchServerStatus];
     [lkScriptsController startServerWatcher];
 }
 
 -(void) serverStateChanged:(NSNotification*)note {
     BOOL isAlive = lkScriptsController.isServerAlive;
-            NSLog(@"serverStateChanged %@", isAlive ? @"y" : @"n");
+    if (firstServerStateChanged) {
+        firstServerStateChanged = false;
+        if (!isAlive) {
+            NSLog(@"starting server in startup phase");
+            [lkScriptsController startOrStopServer:self];
+            return;
+        }
+    }
     NSString* imageNamePart = isAlive ? @"lk-running" : @"lk-not-running";
     NSString* imageName = [[NSBundle mainBundle] pathForResource:imageNamePart ofType:@"png"];
     NSImage* lkStatusImage = [[NSImage alloc] initWithContentsOfFile:imageName];
@@ -42,7 +50,7 @@
     if (lkScriptsController.isServerAlive) {
         [lkScriptsController stopServerThenDo: ^ {
             NSLog(@"shutdown complete...");
-                        [app replyToApplicationShouldTerminate: YES];
+            [app replyToApplicationShouldTerminate: YES];
         }];
         
         return NSTerminateLater;

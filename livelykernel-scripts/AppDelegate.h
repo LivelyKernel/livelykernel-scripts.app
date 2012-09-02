@@ -13,6 +13,7 @@
 #import "LKScriptsController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
+    BOOL firstServerStateChanged;
     StorageController *storageController;
     IBOutlet StartAtLoginManager *loginController;
     IBOutlet LKScriptsController *lkScriptsController;

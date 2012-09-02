@@ -62,7 +62,6 @@
 
 - (void) fetchServerStatus {
     [self getServerStateThenDo: ^ (BOOL isAlive){
-        NSLog(@"getServerStateThenDo %@", isAlive ? @"y" : @"n");
         _isServerAlive = isAlive;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LKServerState" object:self];
     }];
@@ -91,8 +90,12 @@
 - (IBAction)startOrStopServer:(id)sender {
     [self stopServerWatcher];
     void (^updateBlock)() = ^{
-        [self fetchServerStatus];
         [self startServerWatcher];
+        [NSTimer scheduledTimerWithTimeInterval:0.5
+                                         target:self
+                                       selector:@selector(fetchServerStatus)
+                                       userInfo: nil
+                                        repeats:NO];
     };
     if (self.isServerAlive) {
         [self stopServerThenDo:updateBlock];
