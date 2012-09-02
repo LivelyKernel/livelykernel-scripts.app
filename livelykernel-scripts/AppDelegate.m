@@ -21,9 +21,9 @@
     [loginController setupAutoStartup];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(serverStateChanged:)
-                                                 name:@"LKServerState"object:nil];
+    NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
+    [noteCenter addObserver:self selector:@selector(serverStateChanged:) name:@"LKServerState"object:nil];
+    [noteCenter addObserver:self selector:@selector(showScriptOutput:) name:@"LKScriptOutput"object:nil];
 //    [lkScriptsController startServerWatcher];
 //    [lkScriptsController fetchServerStatus];
 //    if (![lkScriptsController isServerAlive]) {
@@ -60,7 +60,8 @@
     [self serverStateChanged: nil];
 }
 
--(void) showInHUD:(NSString*)string {
+-(void) showScriptOutput:(NSNotification*)note {
+    NSString* string = [note object];
     if (![scriptOutputWindow isVisible]){
         [scriptOutputWindow makeKeyAndOrderFront: nil];
     }

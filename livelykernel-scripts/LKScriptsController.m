@@ -12,11 +12,6 @@
 
 @synthesize isServerAlive=_isServerAlive;
 
-//- (id) init {
-//    self = [super init];
-//    return self;
-//}
-
 - (void)parseServerInfoJSON:(NSString*)serverInfoString thenDo:(void(^)(BOOL isAlive))block {
     // we are currently only interested in "alive"
     Boolean alive = false;
@@ -65,8 +60,7 @@
     [self getServerStateThenDo: ^ (BOOL isAlive){
         NSLog(@"getServerStateThenDo %@", isAlive ? @"y" : @"n");
         _isServerAlive = isAlive;
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"LKServerState" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LKServerState" object:self];
     }];
 
 }
@@ -91,7 +85,12 @@
 }
 
 - (IBAction)startOrStopServer:(id)sender {
-    [self startOrStopServerThenDo:^{ [self fetchServerStatus]; }];
+    void (^updateBlock)() = ^{ [self fetchServerStatus]; };
+    if (self.isServerAlive) {
+        [self stopServerThenDo:updateBlock];
+    } else {
+        [self startServerThenDo:updateBlock];
+    }
 }
 
 - (void) startServerThenDo:(void (^)())block {
@@ -110,29 +109,16 @@
     NSLog(@"stopping server ...");
     [self runLKServerCmdSync:@"lk server --kill"];
     block();
-//    CommandLineInterface *commandLine= [[CommandLineInterface alloc] init];
-//    NSTask *task = [commandLine cmdTask:@"lk server --kill"];
-//    task.terminationHandler = ^(NSTask *task) {
-//            block();
-//    };
-//    [task launch];
-//    [task waitUntilExit];
-
-//    [self runLKServerCmd:@"lk server --kill"
-//                onOutput:^(NSString *output) {     NSLog(@"stopping server ... %@", output); }
-//                whenDone:block];
-}
-- (void) startOrStopServerThenDo:(void (^)())block {    
-    if (self.isServerAlive) {
-        [self stopServerThenDo:block];
-    } else {
-        [self startServerThenDo:block];
-    }
 }
 
 - (void) runAndShowLKServerCmd:(NSString*)cmd {
     [self runLKServerCmd:cmd
-                whenDone: ^(NSString *out) { NSLog(@"%@: %@", cmd, out); }];
+                onOutput: ^(NSString *out) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LKScriptOutput" object:out];
+                }
+                whenDone: ^(NSString *out) {
+//                    NSLog(@"%@: %@", cmd, out);
+                }];
 }
 
 - (NSString*) runLKServerCmdSync:(NSString*)cmd {
