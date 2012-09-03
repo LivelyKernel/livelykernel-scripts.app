@@ -20,7 +20,6 @@
 }
 
 - (void) runCmd:(NSString*)cmd onOutput:(void (^)(NSString *stdout))outputBlock whenDone:(void (^)(NSString*))doneBlock isSync:(BOOL)isSync {
-    NSLog(@"running cmd: %@ (%@)", cmd, isSync ? @"sync" : @"async");
     // Creates a task for command to execute it and attaches a filehandle to
     // stdout. Then runs the task and invokes the outputBlock when stdout data
     // arrives
@@ -32,6 +31,7 @@
     __block BOOL taskTerminated = NO;
     __block BOOL endOfFileReached = NO;
     __block NSString *stdoutCombined = @"";
+    NSLog(@"running %@ cmd: %@", isSync ? @"sync" : @"async", cmd);
 
     //////////////////////////////////////
     // deal with what comes from stdout //
@@ -48,6 +48,11 @@
     /////////////////////////////////////////////////////
     if (!isSync) {
         void (^responseBlock)(NSNotification*) = ^(NSNotification *note) {
+            // mutliple commands can run concurrently, to make sure that
+            // the notification is meant for us we need to compare the file
+            // handlers from note and our context
+            NSFileHandle *notificationFile = [note object];
+            if (![notificationFile isEqual:file]) return;
             NSData *data = [[note userInfo] objectForKey:@"NSFileHandleNotificationDataItem"];
             if ([data length] == 0) {
                 [center removeObserver:observer];

@@ -20,6 +20,7 @@
     [noteCenter addObserver:self selector:@selector(showScriptOutput:) name:@"LKScriptOutput"object:nil];
     
     [lkScriptsController startServerWatcher];
+    [lkScriptsController fetchServerStatus];
 }
 
 - (void)awakeFromNib {
@@ -71,7 +72,9 @@
     }
     NSMutableString *content = [[scriptText textStorage] mutableString];
     [content appendString: string];
-    [content appendString: @"\n"];
+    if (![string hasSuffix:@"\n"]) {
+        [content appendString: @"\n"];
+    }
     [scriptText setTextColor:[NSColor whiteColor]];
 }
 

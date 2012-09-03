@@ -123,12 +123,17 @@
 }
 
 - (void) runAndShowLKServerCmd:(NSString*)cmd {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"LKScriptOutput"
+     object:[NSString stringWithFormat:@"Running \"%@\"", cmd]];
     [self runLKServerCmd:cmd
                 onOutput: ^(NSString *out) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"LKScriptOutput" object:out];
                 }
                 whenDone: ^(NSString *out) {
-//                    NSLog(@"%@: %@", cmd, out);
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:@"LKScriptOutput"
+                     object:[NSString stringWithFormat:@"Finished \"%@\"", cmd]];
                 }];
 }
 
