@@ -69,8 +69,10 @@
     if (![scriptOutputWindow isVisible]){
         [scriptOutputWindow makeKeyAndOrderFront: nil];
     }
+    NSMutableString *content = [[scriptText textStorage] mutableString];
+    [content appendString: string];
+    [content appendString: @"\n"];
     [scriptText setTextColor:[NSColor whiteColor]];
-    [[[scriptText textStorage] mutableString] appendString: string];
 }
 
 - (void) inform:msg {
