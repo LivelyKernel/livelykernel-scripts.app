@@ -43,17 +43,30 @@ pushd $PWD
     CpMac -r . ../dependencies/livelykernel-scripts
     cd ../dependencies/livelykernel-scripts
     rm -rfd workspace
-    lkrepo=`lk scripts-dir`/workspace/lk
-    if [[ -d $lkrepo ]]; then
-        mkdir -p workspace/
-        cp -r $lkrepo workspace/
-    else
-        echo "Could not find existing lk workspace"
-    fi
-    if [[ -n $WEBWERKSTATT ]]; then
-        mkdir -p workspace/lk
-        cp -r $WEBWERKSTATT/PartsBin workspace/lk/
-    else
-        echo "Could not find existing PartsBin or Parts"
-    fi
 popd
+
+echo ""
+echo "################"
+echo "# lk core repo #"
+echo "################"
+lkrepo=`lk scripts-dir`/workspace/lk
+lkrepo_in_deps=dependencies/lk-core-repo
+if [[ -d $lkrepo ]]; then
+    echo "Copying lk core repo from $lkrepo to $lkrepo_in_deps"
+    cp -r $lkrepo $lkrepo_in_deps
+    rm -rfd $lkrepo_in_deps/PartsBin
+else
+    echo "Could not find existing lk workspace"
+fi
+
+echo ""
+echo "############"
+echo "# PartsBin #"
+echo "############"
+partsbindir_in_deps=dependencies/PartsBin
+if [[ -n $WEBWERKSTATT ]]; then
+    echo "Copying PartsBin from $WEBWERKSTATT/PartsBin to $partsbindir_in_deps"
+    cp -r $WEBWERKSTATT/PartsBin $partsbindir_in_deps
+else
+    echo "Could not find existing PartsBin"
+fi
