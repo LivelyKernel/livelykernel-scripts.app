@@ -10,23 +10,23 @@
 
 @implementation AppDelegate
 
-- (void)awakeFromNib {
-    [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self setupStatusItem];
-
-    storageController = [[StorageController alloc] init];
     [storageController loadData];
-
-    loginController.storageController = storageController;
     [loginController setupAutoStartup];
     
     NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
     [noteCenter addObserver:self selector:@selector(serverStateChanged:) name:@"LKServerState"object:nil];
     [noteCenter addObserver:self selector:@selector(showScriptOutput:) name:@"LKScriptOutput"object:nil];
-
-    firstServerStateChanged = YES;
-    [lkScriptsController fetchServerStatus];
+    
     [lkScriptsController startServerWatcher];
+}
+
+- (void)awakeFromNib {
+    [scriptOutputWindow setReleasedWhenClosed: NO]; // we want to reuse it later
+    storageController = [[StorageController alloc] init];
+    loginController.storageController = storageController;
+    firstServerStateChanged = YES;
 }
 
 -(void) serverStateChanged:(NSNotification*)note {
