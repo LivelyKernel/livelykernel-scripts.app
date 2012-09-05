@@ -49,15 +49,23 @@ echo ""
 echo "################"
 echo "# lk core repo #"
 echo "################"
-lkrepo=`lk scripts-dir`/workspace/lk
-lkrepo_in_deps=dependencies/lk-core-repo
-if [[ -d $lkrepo ]]; then
-    echo "Copying lk core repo from $lkrepo to $lkrepo_in_deps"
-    cp -r $lkrepo $lkrepo_in_deps
-    rm -rfd $lkrepo_in_deps/PartsBin
-else
-    echo "Could not find existing lk workspace"
-fi
+pushd $PWD
+    lkrepo=`lk scripts-dir`/workspace/lk
+    lkrepo_in_deps=dependencies/lk-core-repo
+    if [[ -d $lkrepo ]]; then
+        echo "Copying lk core repo from $lkrepo to $lkrepo_in_deps"
+        cp -r $lkrepo $lkrepo_in_deps
+        rm -rfd $lkrepo_in_deps/PartsBin
+        echo "setting up git in $lkrepo_in_deps"
+        cd $lkrepo_in_deps
+        git remote rm origin
+        git remote add -t master -m master -f origin git://github.com/rksm/LivelyKernel.git
+        git branch --set-upstream master origin/master
+        git pull --rebase
+    else
+        echo "Could not find existing lk workspace"
+    fi
+popd
 
 echo ""
 echo "############"
