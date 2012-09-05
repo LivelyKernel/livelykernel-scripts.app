@@ -53,6 +53,11 @@ case $INSTALL_PKG_SESSION_ID in
         cmd_name=node;
         package_resource_dir=$resource_dir/$cmd_name;;
     *livelykernel-scripts.pkg)
+        if [[ $resource_dir/livelykernel-scripts/workspace ]]; then
+            old_workspace=/tmp/livelykernel-scripts-workspace-copy
+            echo "saving old workspace to $old_workspace"
+            mv $resource_dir/livelykernel-scripts/workspace $old_workspace
+        fi
         cmd_name=lk;
         package_resource_dir=$resource_dir/livelykernel-scripts;;
     *)
@@ -73,6 +78,10 @@ fi
 if [[ $cmd_name = "lk" ]] && [[ -d $package_resource_dir ]]; then
     echo "symlinking $HOME/node_modules/livelykernel-scripts -> $package_resource_dir"
     ln -sF $package_resource_dir $HOME/node_modules/livelykernel-scripts
+    if [[ -n $old_workspace ]]; then # restore old workspace
+        echo "restoring old workspace"
+        mv $old_workspace $resource_dir/livelykernel-scripts/workspace
+    fi
 fi
 
 echo "Installing $INSTALL_PKG_SESSION_ID done"
