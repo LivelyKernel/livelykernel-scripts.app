@@ -106,8 +106,9 @@
 
 - (void) startServerThenDo:(void (^)())block {
     __block BOOL thenDoBlockRun = NO;
-    [self runLKServerCmd:@"lk server"
+    [self runLKServerCmd:@"lk server 2>&1"
                 onOutput:^ (NSString *output) {
+                    NSLog(@"lk server: %@:", output);
                     if (!thenDoBlockRun) {
                         block();
                         thenDoBlockRun = YES;
