@@ -80,7 +80,7 @@
 }
 
 - (IBAction)openLivelyInBrowser:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://localhost:9001/welcome.xhtml"]];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://localhost:9001/welcome.html"]];
 }
 
 - (IBAction)informAboutServerState:(id)sender {
