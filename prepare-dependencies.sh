@@ -59,7 +59,7 @@ pushd $PWD
         echo "setting up git in $lkrepo_in_deps"
         cd $lkrepo_in_deps
         git remote rm origin
-        git remote add -t master -m master -f origin git://github.com/rksm/LivelyKernel.git
+        git remote add -t master -m master -f origin https://github.com/LivelyKernel/LivelyKernel.git
         git branch --set-upstream master origin/master
         git pull --rebase
     else
